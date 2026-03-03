@@ -1,5 +1,5 @@
 
-import Header from '../../components/header.tsx';
+import Header from '../../components/header/header.tsx';
 
 
 type NotFoundScreenPageProps = {

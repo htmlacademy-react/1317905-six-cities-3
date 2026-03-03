@@ -1,5 +1,5 @@
 import PlaceCard from '../../place-card/place-card.tsx';
-import Header from '../../components/header.tsx';
+import Header from '../../components/header/header.tsx';
 import Cities from '../../components/cities.tsx';
 
 type MainPageProps = {
