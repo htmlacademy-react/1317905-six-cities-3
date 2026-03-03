@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
 
-function NotFoundScreenPage({ isAuth }: { isAuth: boolean }): JSX.Element {
+function NotFoundScreenPage(): JSX.Element {
   return (
     <div
       style={{
@@ -11,7 +11,7 @@ function NotFoundScreenPage({ isAuth }: { isAuth: boolean }): JSX.Element {
         backgroundColor: '#f5f5f5',
       }}
     >
-      <Header isAuth={isAuth} />
+      <Header isAuth={false} />
 
       <main
         className="page__main page__main--index"
