@@ -4,16 +4,17 @@ import Header from '../../components/header.tsx';
 type MainPageProps = {
   cardsCount: number;
   offersCount: number;
+  isSigned: boolean;
 }
 
-function MainPage({cardsCount, offersCount}: MainPageProps): JSX.Element {
+function MainPage({cardsCount, offersCount, isSigned}: MainPageProps): JSX.Element {
   const cards = Array.from({ length: cardsCount }, (_, index) => ({
     id: index + 1,
   }));
 
   return (
     <div className="page page--gray page--main">
-      <Header />
+      <Header isSigned={isSigned}/>
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

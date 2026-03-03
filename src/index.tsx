@@ -12,6 +12,7 @@ root.render(
     <App
       cardsCount = {Setting.CardsCount}
       offersCount = {Setting.OffersCount}
+      isSigned = {Setting.IsSigned}
     />
   </React.StrictMode>
 );
