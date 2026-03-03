@@ -12,7 +12,7 @@ root.render(
     <App
       cardsCount = {Setting.CardsCount}
       offersCount = {Setting.OffersCount}
-      isSigned = {Setting.IsSigned}
+      isAuth = {Setting.IsAuth}
     />
   </React.StrictMode>
 );

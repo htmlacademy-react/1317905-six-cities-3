@@ -1,11 +1,14 @@
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 
+type FavoritesPageProps = {
+  isAuth: boolean;
+}
 
-function FavoritesPage(): JSX.Element {
+function FavoritesPage({isAuth}:FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
-      <Header />
+      <Header isAuth={isAuth}/>
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

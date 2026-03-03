@@ -1,8 +1,8 @@
 type HeaderProps = {
-  isSigned: boolean;
+  isAuth: boolean;
 }
 
-function Header({isSigned}: HeaderProps) : JSX.Element {
+function Header({isAuth}: HeaderProps) : JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -13,7 +13,7 @@ function Header({isSigned}: HeaderProps) : JSX.Element {
             </a>
           </div>
 
-          {isSigned ?
+          {isAuth ?
             (
               <nav className="header__nav">
                 <ul className="header__nav-list">
