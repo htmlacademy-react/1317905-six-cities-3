@@ -1,6 +1,6 @@
 import PlaceCard from '../../place-card/place-card.tsx';
 import Header from '../../components/header/header.tsx';
-import Cities from '../../components/cities.tsx';
+import Cities from '../../components/cities/cities.tsx';
 
 type MainPageProps = {
   cardsCount: number;
