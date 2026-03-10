@@ -17,8 +17,7 @@ function App({cardsCount, offersCount}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-
-        <Route element={<Layout pageClass="page--gray page--main" withNav/>}>
+        <Route element={<Layout />}>
           <Route index element={
             <MainPage
               cardsCount={cardsCount}
@@ -26,30 +25,11 @@ function App({cardsCount, offersCount}: AppScreenProps): JSX.Element {
             />
           }
           />
-        </Route>
-
-
-        <Route element={<Layout withNav/>}>
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <FavoritesPage />
-              </PrivateRoute>
-            }
-          />
-        </Route>
-
-        <Route element={<Layout withNav/>}>
+          <Route path={AppRoute.Login} element={<LoginPage />} />
+          <Route path={AppRoute.Favorites} element={<PrivateRoute authorizationStatus={AuthorizationStatus.Auth}><FavoritesPage /></PrivateRoute>} />
           <Route path={AppRoute.Offer} element={<OfferPage />} />
-        </Route>
-        <Route element={<Layout pageClass="page--gray page--login" withNav={false}/>}>
-          <Route path={AppRoute.Login } element={<LoginPage />} />
-        </Route>
-        <Route element={<Layout withNav/>}>
           <Route path="*" element={<NotFoundScreenPage />} />
         </Route>
-
       </Routes>
     </BrowserRouter>
   );

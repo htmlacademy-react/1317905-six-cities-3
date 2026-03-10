@@ -1,52 +1,28 @@
-import HeaderLogo from './header-logo';
-import {Link, Outlet} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
-import { getAuthStatus } from '../../utils/utils';
+import Header from '../header/header';
+import { Outlet, useLocation} from 'react-router-dom';
+import { AppRoute, PAGE_CLASS_MAP} from '../../const';
+
 
 type LayoutProps = {
   pageClass?: string;
-  withNav?: boolean;
+
 };
 
-function Layout({pageClass, withNav = true }: LayoutProps) : JSX.Element {
-  const authorizationStatus = getAuthStatus();
-  const showNavigation = withNav && authorizationStatus === AuthorizationStatus.Auth;
+function Layout({ pageClass}: LayoutProps) : JSX.Element {
+  const location = useLocation();
+
+  let resolvedPageClass = pageClass ?? '';
+
+  if (!resolvedPageClass) {
+    resolvedPageClass = PAGE_CLASS_MAP[location.pathname] || '';
+  }
+
+  const isLoginPage = location.pathname === AppRoute.Login as string;
+  const withNav = !isLoginPage;
 
   return (
-    <div className={`page ${pageClass ?? ''}`}>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <HeaderLogo />
-            </div>
-
-            {showNavigation && (
-              <nav className="header__nav">
-                <ul className="header__nav-list">
-                  <li className="header__nav-item user">
-                    <Link
-                      className="header__nav-link header__nav-link--profile"
-                      to={AppRoute.Favorites}
-                    >
-                      <div className="header__avatar-wrapper user__avatar-wrapper" />
-                      <span className="header__user-name user__name">
-                        Oliver.conner@gmail.com
-                      </span>
-                      <span className="header__favorite-count">3</span>
-                    </Link>
-                  </li>
-                  <li className="header__nav-item">
-                    <Link className="header__nav-link" to={AppRoute.Login}>
-                      <span className="header__signout">Sign out</span>
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-            )}
-          </div>
-        </div>
-      </header>
+    <div className={`page ${resolvedPageClass ?? ''}`}>
+      <Header withNav={withNav}/>
       <Outlet />
 
     </div>

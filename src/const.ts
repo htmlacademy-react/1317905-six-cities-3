@@ -25,3 +25,8 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const PAGE_CLASS_MAP: Record<string, string> = {
+  [AppRoute.Main]: 'page--gray page--main',
+  [AppRoute.Login]: 'page--gray page--login',
+} as const;
