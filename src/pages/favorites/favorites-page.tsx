@@ -1,15 +1,11 @@
-import Header from '../../components/header';
-import Footer from '../../components/footer';
 
-type FavoritesPageProps = {
-  isAuth: boolean;
-}
+import Footer from '../../components/footer/footer';
 
-function FavoritesPage({isAuth}:FavoritesPageProps): JSX.Element {
+
+function FavoritesPage(): JSX.Element {
   return (
-    <div className="page">
-      <Header isAuth={isAuth}/>
-
+    <>
+      {/* */}
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -48,7 +44,7 @@ function FavoritesPage({isAuth}:FavoritesPageProps): JSX.Element {
                       </div>
                       <div className="place-card__rating rating">
                         <div className="place-card__stars rating__stars">
-                          <span style={{width: '100%'}}></span>
+                          <span style={{ width: '100%' }}></span>
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
@@ -80,7 +76,7 @@ function FavoritesPage({isAuth}:FavoritesPageProps): JSX.Element {
                       </div>
                       <div className="place-card__rating rating">
                         <div className="place-card__stars rating__stars">
-                          <span style={{width: '80%'}}></span>
+                          <span style={{ width: '80%' }}></span>
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
@@ -123,7 +119,7 @@ function FavoritesPage({isAuth}:FavoritesPageProps): JSX.Element {
                       </div>
                       <div className="place-card__rating rating">
                         <div className="place-card__stars rating__stars">
-                          <span style={{width: '100%'}}></span>
+                          <span style={{ width: '100%' }}></span>
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
@@ -140,7 +136,7 @@ function FavoritesPage({isAuth}:FavoritesPageProps): JSX.Element {
         </div>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
 
