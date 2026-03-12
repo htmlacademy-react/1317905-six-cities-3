@@ -1,5 +1,4 @@
 
-
 function OfferPage(): JSX.Element {
   return (
 
