@@ -3,17 +3,9 @@ import { City } from './types/city';
 export const Setting = {
   CardsCount: 5,
   OffersCount: 312,
-  IsAuth: true
+  IsAuth: true,
+  NearOffers: 3
 };
-
-export const CITIES = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
-] as const;
 
 
 export const CITIES_LIST: City[] = [
@@ -85,3 +77,23 @@ export const PAGE_CLASS_MAP: Record<string, string> = {
   [AppRoute.Main]: 'page--gray page--main',
   [AppRoute.Login]: 'page--gray page--login',
 } as const;
+
+
+export const CardViewMode = {
+  CitiesView: {
+    name: 'cities',
+    width: 260,
+    height: 200,
+  },
+  FavoritesView: {
+    name: 'favorites',
+    width: 150,
+    height: 110,
+  },
+  OffersView: {
+    name: 'near-places',
+    width: 260,
+    height: 200,
+  },
+} as const;
+

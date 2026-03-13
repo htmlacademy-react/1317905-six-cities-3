@@ -14,6 +14,7 @@ root.render(
       cardsCount = {Setting.CardsCount}
       offersCount = {Setting.OffersCount}
       offers = {offersData}
+      nearOffers={Setting.NearOffers}
     />
   </React.StrictMode>
 );

@@ -1,6 +1,6 @@
 import Cities from '../../components/cities/cities.tsx';
 import PlaceCardList from '../../place-card/place-card-list.tsx';
-
+import {useState} from 'react';
 import { Offer } from '../../types/offer.ts';
 
 
@@ -11,6 +11,17 @@ type MainPageProps = {
 }
 
 function MainPage({cardsCount, offersCount, offers}: MainPageProps): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cardActive, setCardActive ] = useState<string | null>(null);
+
+
+  const handleCardHover = (id: string) => {
+    setCardActive(id);
+  };
+
+  const handleCardLeave = () => {
+    setCardActive(null);
+  };
 
   return (
     <main className="page__main page__main--index">
@@ -43,6 +54,8 @@ function MainPage({cardsCount, offersCount, offers}: MainPageProps): JSX.Element
             <PlaceCardList
               cardsCount={cardsCount}
               offers={offers}
+              onMouseEnter = {handleCardHover}
+              onMouseLeave = {handleCardLeave}
             />
           </section>
           <div className="cities__right-section">
