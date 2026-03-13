@@ -1,21 +1,9 @@
 import {Link} from 'react-router-dom';
 import { Offer } from '../types/offer';
-import { CardViewMode } from '../const';
+import { CardViewMode, cardClassMap, imageWrapperClassMap } from '../const';
 import { getRatingWidth, getOfferRoute } from '../utils/utils';
 
 type ViewModeType = typeof CardViewMode[keyof typeof CardViewMode];
-
-const cardClassMap = {
-  [CardViewMode.CitiesView.name]: 'cities__card',
-  [CardViewMode.FavoritesView.name]: 'favorites__card',
-  [CardViewMode.OffersView.name]: 'near-places__card',
-};
-
-const imageWrapperClassMap = {
-  [CardViewMode.CitiesView.name]: 'cities__image-wrapper',
-  [CardViewMode.FavoritesView.name]: 'favorites__image-wrapper',
-  [CardViewMode.OffersView.name]: 'near-places__image-wrapper',
-};
 
 type PlaceCardProps = {
   offer: Offer;

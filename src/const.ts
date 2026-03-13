@@ -97,3 +97,15 @@ export const CardViewMode = {
   },
 } as const;
 
+export const cardClassMap = {
+  [CardViewMode.CitiesView.name]: 'cities__card',
+  [CardViewMode.FavoritesView.name]: 'favorites__card',
+  [CardViewMode.OffersView.name]: 'near-places__card',
+};
+
+export const imageWrapperClassMap = {
+  [CardViewMode.CitiesView.name]: 'cities__image-wrapper',
+  [CardViewMode.FavoritesView.name]: 'favorites__image-wrapper',
+  [CardViewMode.OffersView.name]: 'near-places__image-wrapper',
+};
+
