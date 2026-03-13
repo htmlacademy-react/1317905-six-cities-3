@@ -7,13 +7,15 @@ import OfferPage from '../../pages/offer/offer-page.tsx';
 import NotFoundScreenPage from '../../pages/not-found-screen/not-found-screen.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import Layout from '../layout/layout.tsx';
+import { Offer } from '../../types/offer.ts';
 
 type AppScreenProps = {
   cardsCount: number;
   offersCount: number;
+  offers: Offer[];
 }
 
-function App({cardsCount, offersCount}: AppScreenProps): JSX.Element {
+function App({cardsCount, offersCount, offers}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -22,6 +24,7 @@ function App({cardsCount, offersCount}: AppScreenProps): JSX.Element {
             <MainPage
               cardsCount={cardsCount}
               offersCount={offersCount}
+              offers={offers}
             />
           }
           />
