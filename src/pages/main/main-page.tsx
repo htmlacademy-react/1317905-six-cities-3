@@ -2,7 +2,8 @@ import Cities from '../../components/cities/cities.tsx';
 import PlaceCardList from '../../place-card/place-card-list.tsx';
 import {useState} from 'react';
 import { Offer } from '../../types/offer.ts';
-
+import { MapName } from '../../const.ts';
+import Map from '../../components/map/map.tsx';
 
 type MainPageProps = {
   cardsCount: number;
@@ -11,9 +12,8 @@ type MainPageProps = {
 }
 
 function MainPage({cardsCount, offersCount, offers}: MainPageProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cardActive, setCardActive ] = useState<string | null>(null);
 
+  const [cardActive, setCardActive ] = useState<string | null>(null);
 
   const handleCardHover = (id: string) => {
     setCardActive(id);
@@ -59,7 +59,10 @@ function MainPage({cardsCount, offersCount, offers}: MainPageProps): JSX.Element
             />
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <Map
+              activeOfferId={cardActive}
+              mapName = {MapName.Cities}
+            />
           </div>
         </div>
       </div>

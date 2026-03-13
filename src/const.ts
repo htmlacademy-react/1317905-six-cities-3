@@ -114,3 +114,7 @@ export const REVIEW_CONSTANTS = {
   MAX_LENGTH: 300,
 } as const;
 
+export enum MapName {
+  Cities = 'cities',
+  Offers = 'offer',
+}
