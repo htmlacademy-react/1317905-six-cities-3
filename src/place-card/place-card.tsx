@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import { Offer } from '../types/offer';
 import { CardViewMode } from '../const';
-import { getRatingWidth } from '../utils/utils';
+import { getRatingWidth, getOfferRoute } from '../utils/utils';
 
 type ViewModeType = typeof CardViewMode[keyof typeof CardViewMode];
 
@@ -43,7 +43,7 @@ function PlaceCard(props: PlaceCardProps) : JSX.Element {
         </div>
       )}
       <div className={`place-card__image-wrapper ${imageWrapperClass}`}>
-        <Link to={`offer/${id}`}>
+        <Link to={getOfferRoute(id)}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -73,7 +73,7 @@ function PlaceCard(props: PlaceCardProps) : JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${id}`}>{title}</Link>
+          <Link to={getOfferRoute(id)}>{title}</Link>
         </h2>
         <p className="place-card__type">{type ? type.charAt(0).toUpperCase() + type.slice(1) : 'Unknown'}</p>
       </div>

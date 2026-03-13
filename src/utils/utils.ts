@@ -5,3 +5,5 @@ export const getAuthStatus = () : AuthorizationStatus => AuthorizationStatus.Aut
 export function getRatingWidth(rating: number): string {
   return `${Math.round(rating) * 20}%`;
 }
+
+export const getOfferRoute = (id: string) => `/offer/${id}`;
