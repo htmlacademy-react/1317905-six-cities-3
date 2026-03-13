@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Offer } from '../../types/offer.ts';
 import OfferGallery from './offer-gallery.tsx';
@@ -13,6 +14,11 @@ type OfferPageProps = {
 function OfferPage({offers, nearOffers}: OfferPageProps): JSX.Element {
 
   const {id} = useParams<{id:string}>();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
 
   const offer = offers.find((o) => o.id === id);
   if (!offer) {
