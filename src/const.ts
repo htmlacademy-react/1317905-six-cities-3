@@ -1,7 +1,6 @@
 import { City } from './types/city';
 
 export const Setting = {
-  CardsCount: 5,
   OffersCount: 312,
   IsAuth: true,
   NearOffers: 3

@@ -1,15 +1,15 @@
-import { Offer } from '../../types/offer.ts';
+import { OfferCard } from '../../types/offer.ts';
 import { CardViewMode } from '../../const.ts';
 import PlaceCard from '../../place-card/place-card.tsx';
 
 type FavoritesPageProps = {
-  offers: Offer[];
+  offerCards: OfferCard[];
 };
 
 function FavoritesPage(props: FavoritesPageProps): JSX.Element {
-  const { offers } = props;
+  const { offerCards } = props;
 
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const favoriteOffers = offerCards.filter((offer) => offer.isFavorite);
 
   return (
     <>
@@ -31,7 +31,7 @@ function FavoritesPage(props: FavoritesPageProps): JSX.Element {
                   {favoriteOffers.map((offer) => (
                     <PlaceCard
                       key={offer.id}
-                      offer={offer}
+                      offerCard={offer}
                       viewMode={CardViewMode.FavoritesView}
                     />
                   ))}

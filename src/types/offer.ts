@@ -2,17 +2,25 @@ import { City } from './city';
 import { Location } from './location';
 import { Host } from './host';
 
-export type Offer = {
+type OfferTemplate = {
   id: string;
   title: string;
-  type?: string;
+  type: string;
   price: number;
   city: City;
   location: Location;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
+
+};
+
+
+export type OfferCard = OfferTemplate & {
   previewImage: string;
+};
+
+export type Offer = OfferTemplate & {
   description: string;
   bedrooms: number;
   goods: string[];
@@ -20,3 +28,4 @@ export type Offer = {
   images: string[];
   maxAdults: number;
 };
+

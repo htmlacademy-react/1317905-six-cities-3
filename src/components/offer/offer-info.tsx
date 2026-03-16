@@ -3,11 +3,10 @@ import { Offer } from '../../types/offer.ts';
 import OfferGoods from './offer-goods.tsx';
 import OfferHost from './offer-host.tsx';
 import OfferReviews from './offer-reviews.tsx';
-import { getRatingWidth } from '../../utils/utils.ts';
+import { getRatingWidth, getCapitalLetter } from '../../utils/utils.ts';
 
 type OfferInfoProps = {
   offers: Offer[];
-
 };
 
 function OfferInfo(props: OfferInfoProps): JSX.Element {
@@ -32,11 +31,11 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
           <h1 className="offer__name">
             {offer.title}
           </h1>
-          <button className="offer__bookmark-button button" type="button">
+          <button className={`offer__bookmark-button ${offer.isFavorite ? 'offer__bookmark-button--active' : ''} button`} type="button">
             <svg className="offer__bookmark-icon" width={31} height={33}>
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">{offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className="offer__rating rating">
@@ -48,9 +47,7 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
         </div>
         <ul className="offer__features">
           <li className="offer__feature offer__feature--entire">
-            {offer.type
-              ? offer.type.charAt(0).toUpperCase() + offer.type.slice(1)
-              : 'Unknown'}
+            {getCapitalLetter(offer.type)}
           </li>
           <li className="offer__feature offer__feature--bedrooms">
             {offer.bedrooms} Bedrooms

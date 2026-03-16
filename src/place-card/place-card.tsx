@@ -1,23 +1,24 @@
 import {Link} from 'react-router-dom';
-import { Offer } from '../types/offer';
+import { OfferCard } from '../types/offer';
 import { CardViewMode, cardClassMap, imageWrapperClassMap } from '../const';
-import { getRatingWidth, getOfferRoute } from '../utils/utils';
+import { getRatingWidth, getOfferRoute, getCapitalLetter } from '../utils/utils';
 
 type ViewModeType = typeof CardViewMode[keyof typeof CardViewMode];
 
 type PlaceCardProps = {
-  offer: Offer;
+  offerCard: OfferCard;
   viewMode?: ViewModeType;
   onMouseEnter?: (id: string) => void;
   onMouseLeave?: () => void;
 }
 
 function PlaceCard(props: PlaceCardProps) : JSX.Element {
-  const {offer, viewMode = CardViewMode.CitiesView, onMouseEnter, onMouseLeave} = props;
-  const {id, title, type, price, previewImage, isFavorite, isPremium, rating} = offer;
+  const {offerCard, viewMode = CardViewMode.CitiesView, onMouseEnter, onMouseLeave} = props;
+  const {id, title, type, price, previewImage, isFavorite, isPremium, rating} = offerCard;
 
   const cardClass = cardClassMap[viewMode.name];
   const imageWrapperClass = imageWrapperClassMap[viewMode.name];
+
 
   return (
     <article
@@ -25,7 +26,7 @@ function PlaceCard(props: PlaceCardProps) : JSX.Element {
       onMouseEnter={() => onMouseEnter?.(id)}
       onMouseLeave={onMouseLeave}
     >
-      {isPremium && viewMode.name !== CardViewMode.FavoritesView.name && (
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
@@ -63,7 +64,7 @@ function PlaceCard(props: PlaceCardProps) : JSX.Element {
         <h2 className="place-card__name">
           <Link to={getOfferRoute(id)}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type ? type.charAt(0).toUpperCase() + type.slice(1) : 'Unknown'}</p>
+        <p className="place-card__type">{getCapitalLetter(type)}</p>
       </div>
     </article>
 

@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {Setting} from './const';
-import { offersData } from './mocks/offers';
+import { offersMock } from './mocks/offers';
+import { offerCardsMock } from './mocks/offer-cards';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,9 +12,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
-      cardsCount = {Setting.CardsCount}
-      offersCount = {Setting.OffersCount}
-      offers = {offersData}
+      offers = {offersMock}
+      offerCards = {offerCardsMock}
       nearbyOffersCount={Setting.NearOffers}
     />
   </React.StrictMode>

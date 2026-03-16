@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Offer } from '../../types/offer.ts';
-import OfferGallery from './offer-gallery.tsx';
-import OfferMap from './offer-map.tsx';
-import OfferOtherPlaces from './offer-other-places.tsx';
-import OfferInfo from './offer-info.tsx';
+import { Offer, OfferCard } from '../../types/offer.ts';
+import OfferGallery from '../../components/offer/offer-gallery.tsx';
+import OfferMap from '../../components/offer/offer-map.tsx';
+import OfferOtherPlaces from '../../components/offer/offer-other-places.tsx';
+import OfferInfo from '../../components/offer/offer-info.tsx';
 
 type OfferPageProps = {
   offers: Offer[];
+  offerCards: OfferCard[];
   nearOffers: number;
 }
 
-function OfferPage({offers, nearOffers}: OfferPageProps): JSX.Element {
+function OfferPage({offers, offerCards, nearOffers}: OfferPageProps): JSX.Element {
 
   const {id} = useParams<{id:string}>();
 
@@ -34,7 +35,7 @@ function OfferPage({offers, nearOffers}: OfferPageProps): JSX.Element {
         <OfferMap />
       </section>
       <OfferOtherPlaces
-        offers={offers}
+        offerCards={offerCards}
         nearbyOffersCount={nearOffers}
       />
     </main>

@@ -1,17 +1,17 @@
-import { Offer } from '../../types/offer.ts';
+import { OfferCard } from '../../types/offer.ts';
 import PlaceCard from '../../place-card/place-card.tsx';
 import { CardViewMode } from '../../const.ts';
 
 type OfferOtherPlacesProps = {
-  offers: Offer[];
+  offerCards: OfferCard[];
   nearbyOffersCount: number;
 };
 
 function OfferOtherPlaces(props: OfferOtherPlacesProps): JSX.Element {
 
-  const {offers, nearbyOffersCount} = props;
+  const {offerCards, nearbyOffersCount} = props;
 
-  const displayedNearOffers = offers.slice(0, nearbyOffersCount);
+  const displayedNearOffers = offerCards.slice(0, nearbyOffersCount);
 
   return (
     <div className="container">
@@ -21,7 +21,7 @@ function OfferOtherPlaces(props: OfferOtherPlacesProps): JSX.Element {
           {displayedNearOffers.map((offer) => (
             <PlaceCard
               key={offer.id}
-              offer={offer}
+              offerCard={offer}
               viewMode={CardViewMode.OffersView}
             />
           ))}

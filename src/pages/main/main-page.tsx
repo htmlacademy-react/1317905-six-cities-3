@@ -1,17 +1,15 @@
 import Cities from '../../components/cities/cities.tsx';
 import PlaceCardList from '../../place-card/place-card-list.tsx';
 import {useState} from 'react';
-import { Offer } from '../../types/offer.ts';
+import { OfferCard } from '../../types/offer.ts';
 import { MapName } from '../../const.ts';
 import Map from '../../components/map/map.tsx';
 
 type MainPageProps = {
-  cardsCount: number;
-  offersCount: number;
-  offers: Offer[];
+  offerCards: OfferCard[];
 }
 
-function MainPage({cardsCount, offersCount, offers}: MainPageProps): JSX.Element {
+function MainPage({offerCards}: MainPageProps): JSX.Element {
 
   const [cardActive, setCardActive ] = useState<string | null>(null);
 
@@ -35,7 +33,7 @@ function MainPage({cardsCount, offersCount, offers}: MainPageProps): JSX.Element
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{offersCount} places to stay in Amsterdam</b>
+            <b className="places__found">{offerCards.length} places to stay in Amsterdam</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>
@@ -52,8 +50,7 @@ function MainPage({cardsCount, offersCount, offers}: MainPageProps): JSX.Element
               </ul>
             </form>
             <PlaceCardList
-              cardsCount={cardsCount}
-              offers={offers}
+              offerCards={offerCards}
               onMouseEnter = {handleCardHover}
               onMouseLeave = {handleCardLeave}
             />
