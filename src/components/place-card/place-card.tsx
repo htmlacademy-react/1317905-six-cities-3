@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
-import { OfferCard } from '../types/offer';
-import { CardViewMode, cardClassMap, imageWrapperClassMap } from '../const';
-import { getRatingWidth, getOfferRoute, getCapitalLetter } from '../utils/utils';
+import { OfferCard } from '../../types/offer';
+import { CardViewMode, cardClassMap, imageWrapperClassMap } from '../../const';
+import { getRatingWidth, getOfferRoute, getCapitalLetter } from '../../utils/utils';
 
 type ViewModeType = typeof CardViewMode[keyof typeof CardViewMode];
 

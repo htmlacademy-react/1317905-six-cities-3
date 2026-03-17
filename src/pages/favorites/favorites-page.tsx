@@ -1,6 +1,6 @@
 import { OfferCard } from '../../types/offer.ts';
 import { CardViewMode } from '../../const.ts';
-import PlaceCard from '../../place-card/place-card.tsx';
+import PlaceCard from '../../components/place-card/place-card.tsx';
 
 type FavoritesPageProps = {
   offerCards: OfferCard[];

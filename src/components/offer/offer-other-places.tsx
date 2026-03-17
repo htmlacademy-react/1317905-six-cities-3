@@ -1,5 +1,5 @@
 import { OfferCard } from '../../types/offer.ts';
-import PlaceCard from '../../place-card/place-card.tsx';
+import PlaceCard from '../place-card/place-card.tsx';
 import { CardViewMode } from '../../const.ts';
 
 type OfferOtherPlacesProps = {

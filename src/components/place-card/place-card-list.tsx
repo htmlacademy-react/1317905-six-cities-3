@@ -1,7 +1,7 @@
 
 import PlaceCard from './place-card';
-import { CardViewMode } from '../const';
-import { OfferCard } from '../types/offer';
+import { CardViewMode } from '../../const';
+import { OfferCard } from '../../types/offer';
 
 type PlaceCardListProps = {
   offerCards: OfferCard[];

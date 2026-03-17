@@ -1,5 +1,5 @@
 import Cities from '../../components/cities/cities.tsx';
-import PlaceCardList from '../../place-card/place-card-list.tsx';
+import PlaceCardList from '../../components/place-card/place-card-list.tsx';
 import {useState} from 'react';
 import { OfferCard } from '../../types/offer.ts';
 import { MapName } from '../../const.ts';
