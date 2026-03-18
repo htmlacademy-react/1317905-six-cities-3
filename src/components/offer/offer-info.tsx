@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { Offer } from '../../types/offer.ts';
+import { Review } from '../../types/review.ts';
 import OfferGoods from './offer-goods.tsx';
 import OfferHost from './offer-host.tsx';
 import OfferReviews from './offer-reviews.tsx';
@@ -7,11 +8,12 @@ import { getRatingWidth, capitalizeFirstLetter } from '../../utils/utils.ts';
 
 type OfferInfoProps = {
   offers: Offer[];
+  reviews: Review[];
 };
 
 function OfferInfo(props: OfferInfoProps): JSX.Element {
 
-  const {offers} = props;
+  const {offers, reviews} = props;
   const {id} = useParams<{id:string}>();
 
   const offer = offers.find((o) => o.id === id);
@@ -50,10 +52,10 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
             {capitalizeFirstLetter(offer.type)}
           </li>
           <li className="offer__feature offer__feature--bedrooms">
-            {offer.bedrooms} Bedrooms
+            {offer.bedrooms} {offer.bedrooms !== 1 ? 'Bedrooms' : 'Bedroom'}
           </li>
           <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxAdults} adults
+                  Max {offer.maxAdults} {offer.maxAdults !== 1 ? 'adults' : 'adult'}
           </li>
         </ul>
         <div className="offer__price">
@@ -65,7 +67,9 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
           host={offer.host}
           description={offer.description}
         />
-        <OfferReviews />
+        <OfferReviews
+          reviews={reviews}
+        />
       </div>
     </div>
 

@@ -8,14 +8,16 @@ import NotFoundScreenPage from '../../pages/not-found-screen/not-found-screen.ts
 import PrivateRoute from '../private-route/private-route.tsx';
 import Layout from '../layout/layout.tsx';
 import { Offer, OfferCard } from '../../types/offer.ts';
+import { Review } from '../../types/review.ts';
 
 type AppScreenProps = {
   offerCards: OfferCard[];
   offers: Offer[];
   nearbyOffersCount: number;
+  reviews: Review[];
 }
 
-function App({offers, offerCards, nearbyOffersCount}: AppScreenProps): JSX.Element {
+function App({offers, offerCards, nearbyOffersCount, reviews}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -33,6 +35,7 @@ function App({offers, offerCards, nearbyOffersCount}: AppScreenProps): JSX.Eleme
               offers={offers}
               offerCards={offerCards}
               nearOffers={nearbyOffersCount}
+              reviews={reviews}
             />
           }
           />

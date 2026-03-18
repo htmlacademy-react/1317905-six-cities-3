@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Offer, OfferCard } from '../../types/offer.ts';
+import { Review } from '../../types/review.ts';
 import OfferGallery from '../../components/offer/offer-gallery.tsx';
 import OfferMap from '../../components/offer/offer-map.tsx';
 import OfferOtherPlaces from '../../components/offer/offer-other-places.tsx';
@@ -10,9 +11,10 @@ type OfferPageProps = {
   offers: Offer[];
   offerCards: OfferCard[];
   nearOffers: number;
+  reviews: Review[];
 }
 
-function OfferPage({offers, offerCards, nearOffers}: OfferPageProps): JSX.Element {
+function OfferPage({offers, offerCards, nearOffers, reviews}: OfferPageProps): JSX.Element {
 
   const {id} = useParams<{id:string}>();
 
@@ -26,12 +28,16 @@ function OfferPage({offers, offerCards, nearOffers}: OfferPageProps): JSX.Elemen
     return <div>Offer not found</div>;
   }
 
+
   return (
 
     <main className="page__main page__main--offer">
       <section className="offer">
         <OfferGallery images={offer.images}/>
-        <OfferInfo offers={offers}/>
+        <OfferInfo
+          offers={offers}
+          reviews={reviews}
+        />
         <OfferMap />
       </section>
       <OfferOtherPlaces
