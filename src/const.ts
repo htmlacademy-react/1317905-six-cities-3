@@ -7,6 +7,16 @@ export const Setting = {
 };
 
 
+export const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf'
+] as const;
+
+
 export const CITIES_LIST: City[] = [
   {
     name: 'Paris',
@@ -58,6 +68,12 @@ export const CITIES_LIST: City[] = [
   },
 ] ;
 
+export const AMSTERDAM_LOCATIONS = [
+  { latitude: 52.3909553943508, longitude: 4.85309666406198 },
+  { latitude: 52.3609553943508, longitude: 4.85309666406198 },
+  { latitude: 52.3909553943508, longitude: 4.929309666406198 },
+  { latitude: 52.3809553943508, longitude: 4.939309666406198 },
+] as const;
 
 export enum AppRoute {
   Login = '/login',
@@ -117,3 +133,7 @@ export enum MapName {
   Cities = 'cities',
   Offers = 'offer',
 }
+
+export const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+
+export const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
