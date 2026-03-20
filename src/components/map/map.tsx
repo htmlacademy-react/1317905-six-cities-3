@@ -1,15 +1,15 @@
-import { useRef, useEffect, useState } from 'react';
-import leaflet from 'leaflet';
+import { useEffect, useRef } from 'react';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { OfferCard } from '../../types/offer';
 
-const defaultIcon = leaflet.icon({
+const defaultIcon = L.icon({
   iconUrl: '/markup/img/pin.svg',
   iconSize: [27, 39],
   iconAnchor: [13, 39],
 });
 
-const activeIcon = leaflet.icon({
+const activeIcon = L.icon({
   iconUrl: '/markup/img/pin-active.svg',
   iconSize: [27, 39],
   iconAnchor: [13, 39],
@@ -19,69 +19,56 @@ type MapProps = {
   mapName: string;
   offers: OfferCard[];
   activeOfferId?: string | null;
-}
+};
 
-function Map({ mapName, offers, activeOfferId = null }: MapProps) {
+function Map({ mapName, offers, activeOfferId = null }: MapProps): JSX.Element {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const [map, setMap] = useState<leaflet.Map | null>(null);
-  const isRenderedRef = useRef(false);
+  const mapInstanceRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
-    if (mapRef.current !== null && !isRenderedRef.current) {
+    if (mapRef.current !== null && mapInstanceRef.current === null) {
       const cityLocation = offers[0]?.city.location || {
         latitude: 52.37454,
         longitude: 4.897976,
-        zoom: 12
+        zoom: 12,
       };
 
-      const instance = leaflet.map(mapRef.current, {
-        center: {
-          lat: cityLocation.latitude,
-          lng: cityLocation.longitude,
+      const map = L.map(mapRef.current).setView(
+        [cityLocation.latitude, cityLocation.longitude],
+        cityLocation.zoom,
+      );
+
+      L.tileLayer(
+        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         },
-        zoom: cityLocation.zoom,
-      });
+      ).addTo(map);
 
-      leaflet
-        .tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        })
-        .addTo(instance);
-
-      setMap(instance);
-      isRenderedRef.current = true;
+      mapInstanceRef.current = map;
     }
   }, [offers]);
 
   useEffect(() => {
-    if (!map) {
+    if (!mapInstanceRef.current) {
       return;
     }
 
-    map.eachLayer((layer) => {
-      if (layer instanceof leaflet.Marker) {
-        map.removeLayer(layer);
-      }
-    });
+    const map = mapInstanceRef.current;
 
-    offers.forEach((offer) => {
-      leaflet
-        .marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude,
-        }, {
-          icon: offer.id === activeOfferId ? activeIcon : defaultIcon,
-        })
-        .addTo(map);
-    });
-  }, [map, offers, activeOfferId]);
+    const markers = offers.map((offer) =>
+      L.marker([offer.location.latitude, offer.location.longitude], {
+        icon: offer.id === activeOfferId ? activeIcon : defaultIcon,
+      }).addTo(map),
+    );
 
-  return (
-    <section
-      className={`${mapName}__map map`}
-      ref={mapRef}
-    />
-  );
+    return () => {
+      markers.forEach((marker) => marker.remove());
+    };
+  }, [offers, activeOfferId]);
+
+  return <section ref={mapRef} className={`${mapName}__map map`} />;
 }
 
 export default Map;
