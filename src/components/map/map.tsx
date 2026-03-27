@@ -2,6 +2,7 @@ import { useEffect, useRef, useMemo } from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { OfferCard } from '../../types/offer';
+import { Location } from '../../types/location';
 
 const defaultIcon = leaflet.icon({
   iconUrl: '/markup/img/pin.svg',
@@ -15,39 +16,70 @@ const activeIcon = leaflet.icon({
   iconAnchor: [13, 39],
 });
 
+const defaultLocation: Location = {
+  latitude: 52.37454,
+  longitude: 4.897976,
+  zoom: 12,
+};
 
 type MapProps = {
   mapName: string;
   offers: OfferCard[];
   activeOfferId?: string | null;
   currentOffer?: OfferCard;
+  cityLocation?: Location;
 };
 
-function Map({ mapName, offers, currentOffer, activeOfferId = null }: MapProps): JSX.Element {
+function Map({
+  mapName,
+  offers,
+  currentOffer,
+  activeOfferId = null,
+  cityLocation,
+}: MapProps): JSX.Element {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
-  const center = useMemo(() => currentOffer
-    ? currentOffer.location
-    : offers[0]?.location || { latitude: 52.37454, longitude: 4.897976, zoom: 12 }, [currentOffer, offers]);
+  const center = useMemo(() => {
+    if (cityLocation) {
+      return cityLocation;
+    }
+    if (currentOffer) {
+      return currentOffer.location;
+    }
+    return offers[0]?.location || defaultLocation;
+  }, [cityLocation, currentOffer, offers]);
 
   useEffect(() => {
     if (mapRef.current !== null && mapInstanceRef.current === null) {
-      const map = leaflet.map(mapRef.current, {
-        scrollWheelZoom: false,
-        zoomControl: true,
-        doubleClickZoom: true,
-      }).setView([center.latitude, center.longitude], center.zoom);
+      const map = leaflet
+        .map(mapRef.current, {
+          scrollWheelZoom: false,
+          zoomControl: true,
+          doubleClickZoom: true,
+        })
+        .setView([center.latitude, center.longitude], center.zoom);
 
-      leaflet.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        },
-      ).addTo(map);
+      leaflet
+        .tileLayer(
+          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+          {
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          },
+        )
+        .addTo(map);
 
       mapInstanceRef.current = map;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.setView(
+        [center.latitude, center.longitude],
+        center.zoom,
+      );
     }
   }, [center]);
 
@@ -57,7 +89,6 @@ function Map({ mapName, offers, currentOffer, activeOfferId = null }: MapProps):
     }
 
     const map = mapInstanceRef.current;
-
     const allPoints = currentOffer ? [currentOffer, ...offers] : offers;
 
     const markers = allPoints.map((point) => {
