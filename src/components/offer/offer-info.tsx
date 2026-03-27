@@ -1,25 +1,19 @@
-import { useParams } from 'react-router-dom';
 import { Offer } from '../../types/offer.ts';
 import { Review } from '../../types/review.ts';
 import OfferGoods from './offer-goods.tsx';
 import OfferHost from './offer-host.tsx';
-import OfferReviews from './offer-reviews.tsx';
+import OfferReviewList from './offer-review-list.tsx';
 import { getRatingWidth, capitalizeFirstLetter } from '../../utils/utils.ts';
 
 type OfferInfoProps = {
-  offers: Offer[];
+  offer: Offer;
   reviews: Review[];
 };
 
 function OfferInfo(props: OfferInfoProps): JSX.Element {
 
-  const {offers, reviews} = props;
-  const {id} = useParams<{id:string}>();
+  const {offer, reviews} = props;
 
-  const offer = offers.find((o) => o.id === id);
-  if (!offer) {
-    return <div>Offer not found</div>;
-  }
 
   return (
     <div className="offer__container container">
@@ -67,7 +61,7 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
           host={offer.host}
           description={offer.description}
         />
-        <OfferReviews
+        <OfferReviewList
           reviews={reviews}
         />
       </div>
