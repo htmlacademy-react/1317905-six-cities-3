@@ -28,14 +28,11 @@ function OfferPage({
 
   const currentOffer = offers.find((o) => o.id === id);
   const currentOfferCard = offerCards.find((card) => card.id === id);
-
-  const nearbyOffers = offerCards
-    .filter((offer) => offer.id !== id)
-    .slice(0, nearOffers);
-
   if (!currentOffer || !currentOfferCard) {
     return <div>Offer not found</div>;
   }
+
+  const nearbyOffers = offerCards.filter((offer) => offer.city.name === currentOffer.city.name && offer.id !== id).slice(0, nearOffers);
 
   return (
     <main className="page__main page__main--offer">
