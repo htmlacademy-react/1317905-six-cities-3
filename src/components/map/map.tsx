@@ -3,15 +3,16 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { OfferCard } from '../../types/offer';
 import { Location } from '../../types/location';
+import { MARKERS } from '../../const';
 
 const defaultIcon = leaflet.icon({
-  iconUrl: '/markup/img/pin.svg',
+  iconUrl: MARKERS.URL_MARKER_DEFAULT,
   iconSize: [27, 39],
   iconAnchor: [13, 39],
 });
 
 const activeIcon = leaflet.icon({
-  iconUrl: '/markup/img/pin-active.svg',
+  iconUrl:  MARKERS.URL_MARKER_ACTIVE,
   iconSize: [27, 39],
   iconAnchor: [13, 39],
 });
