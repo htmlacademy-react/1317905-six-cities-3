@@ -134,6 +134,10 @@ export enum MapName {
   Offers = 'offer',
 }
 
-export const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 
-export const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export const MARKERS = {
+  URL_MARKER_DEFAULT: '/markup/img/pin.svg',
+  URL_MARKER_ACTIVE: '/markup/img/pin-active.svg',
+} as const;
+
+
