@@ -3,16 +3,34 @@ import { useState } from 'react';
 import { RootState } from '../../store';
 import PlaceCardList from '../../components/place-card/place-card-list';
 import Map from '../../components/map/map';
-
+import SortList from '../sort-list/sort-list';
+import { OfferCard } from '../../types/offer';
 
 function CitiesContainer(): JSX.Element {
   const [cardActive, setCardActive] = useState<string | null>(null);
 
   const city = useSelector((state: RootState) => state.city);
   const allOffers = useSelector((state: RootState) => state.offers);
+  const sorting = useSelector((state: RootState) => state.sorting);
 
   const filteredOffers = allOffers.filter((offer) => offer.city.name === city);
-  const isEmpty = filteredOffers.length === 0;
+
+  const sortOffers = (offers: OfferCard[], sortType: string) => {
+    const copyOffers = [...offers];
+    switch(sortType) {
+      case 'priceLowToHigh':
+        return copyOffers.sort((a , b) => a.price - b.price);
+      case 'priceHighToLow':
+        return copyOffers.sort((a , b) => b.price - a.price);
+      case 'topRated':
+        return copyOffers.sort((a , b) => b.rating - a.rating);
+      default:
+        return copyOffers;
+    }
+  };
+
+  const sortedOffers = sortOffers(filteredOffers, sorting);
+  const isEmpty = sortedOffers.length === 0;
 
   const handleCardHover = (id: string) => setCardActive(id);
   const handleCardLeave = () => setCardActive(null);
@@ -40,38 +58,11 @@ function CitiesContainer(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {filteredOffers.length}{' '}
-                {filteredOffers.length !== 1 ? 'places' : 'place'} to stay in{' '}
-                {city}
+                {sortedOffers.length} {sortedOffers.length !== 1 ? 'places' : 'place'} to stay in {city}
               </b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width={7} height={4}>
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li
-                    className="places__option places__option--active"
-                    tabIndex={0}
-                  >
-                    Popular
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: low to high
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: high to low
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Top rated first
-                  </li>
-                </ul>
-              </form>
+              <SortList />
               <PlaceCardList
-                offerCards={filteredOffers}
+                offerCards={sortedOffers}
                 onMouseEnter={handleCardHover}
                 onMouseLeave={handleCardLeave}
               />
@@ -79,7 +70,7 @@ function CitiesContainer(): JSX.Element {
             <div className="cities__right-section">
               <Map
                 mapName="cities"
-                offers={filteredOffers}
+                offers={sortedOffers}
                 activeOfferId={cardActive}
               />
             </div>
