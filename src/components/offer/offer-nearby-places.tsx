@@ -4,15 +4,18 @@ import { OfferCard } from '../../types/offer';
 
 type OfferNearbyPlacesProps = {
   offers: OfferCard[];
+};
 
-}
-
-function OfferNearbyPlaces({ offers }: OfferNearbyPlacesProps): JSX.Element {
-
+function OfferNearbyPlaces({ offers }: OfferNearbyPlacesProps): JSX.Element | null{
+  if (offers.length === 0) {
+    return null;
+  }
   return (
     <div className="container">
       <section className="near-places places">
-        <h2 className="near-places__title">Other places in the neighbourhood</h2>
+        <h2 className="near-places__title">
+          Other places in the neighbourhood
+        </h2>
         <div className="near-places__list places__list">
           {offers.map((offer) => (
             <PlaceCard
