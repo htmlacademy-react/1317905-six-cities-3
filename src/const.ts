@@ -140,4 +140,11 @@ export const MARKERS = {
   URL_MARKER_ACTIVE: '/markup/img/pin-active.svg',
 } as const;
 
+export const SORT_TYPES = [
+  { label: 'Popular', value: 'popular' },
+  { label: 'Price: low to high', value: 'priceLowToHigh' },
+  { label: 'Price: high to low', value: 'priceHighToLow' },
+  { label: 'Top rated first', value: 'topRated' },
+] as const;
+
 
