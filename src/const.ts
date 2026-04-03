@@ -152,6 +152,7 @@ export const APIRoute = {
   Offers: '/offers',
   Offer: (id: string) => `/offers/${id}`,
   Nearby: (id: string) => `/offers/${id}/nearby`,
+  Reviews: (id: string) => `/comments/${id}`,
   Login: '/login',
   Logout: '/logout',
 } as const;

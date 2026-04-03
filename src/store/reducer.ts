@@ -8,7 +8,10 @@ import {
   setError,
 } from './action';
 
+import { fetchOfferAction, fetchNearbyOffersAction, fetchReviewsAction } from './api-actions';
+
 import { OfferCard, Offer } from '../types/offer';
+import { Review } from '../types/review';
 import { CITIES, SORT_TYPES, AuthorizationStatus } from '../const';
 
 export type AppState = {
@@ -20,6 +23,8 @@ export type AppState = {
   authorizationStatus: AuthorizationStatus;
   isOffersLoading: boolean;
   isOfferLoading: boolean;
+  reviews: Review[];
+  isReviewsLoading: boolean;
   error: string | null;
 };
 
@@ -32,6 +37,8 @@ const initialState: AppState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersLoading: false,
   isOfferLoading: false,
+  reviews: [],
+  isReviewsLoading: false,
   error: null,
 };
 
@@ -55,6 +62,36 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+
+    .addCase(fetchOfferAction.pending, (state) => {
+      state.isOfferLoading = true;
+    })
+    .addCase(fetchOfferAction.fulfilled, (state, action) => {
+      state.singleOffer = action.payload;
+      state.isOfferLoading = false;
+    })
+    .addCase(fetchOfferAction.rejected, (state) => {
+      state.isOfferLoading = false;
+      state.singleOffer = null;
+    })
+
+    .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
+      state.nearbyOffers = action.payload;
+    })
+    .addCase(fetchNearbyOffersAction.rejected, (state) => {
+      state.nearbyOffers = [];
+    })
+    .addCase(fetchReviewsAction.pending, (state) => {
+      state.isReviewsLoading = true;
+    })
+    .addCase(fetchReviewsAction.fulfilled, (state, action) => {
+      state.reviews = action.payload;
+      state.isReviewsLoading = false;
+    })
+    .addCase(fetchReviewsAction.rejected, (state) => {
+      state.reviews = [];
+      state.isReviewsLoading = false;
     });
 });
 
