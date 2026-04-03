@@ -1,5 +1,7 @@
 // src/components/app/app.tsx
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import MainPage from '../../pages/main/main-page';
 import LoginPage from '../../pages/login/login-page';
@@ -11,6 +13,7 @@ import Layout from '../layout/layout';
 import { Offer } from '../../types/offer';
 import { OfferCard } from '../../types/offer';
 import { Review } from '../../types/review';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 type AppProps = {
   offers: Offer[];
@@ -20,6 +23,14 @@ type AppProps = {
 };
 
 function App({ offers, offerCards, reviews, nearbyOffersCount }: AppProps): JSX.Element {
+  const authorizationStatus = useSelector((state: RootState) => state.authorizationStatus);
+  const isOffersLoading = useSelector((state: RootState) => state.isOffersLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>
