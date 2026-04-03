@@ -12,7 +12,7 @@ const defaultIcon = leaflet.icon({
 });
 
 const activeIcon = leaflet.icon({
-  iconUrl:  MARKERS.URL_MARKER_ACTIVE,
+  iconUrl: MARKERS.URL_MARKER_ACTIVE,
   iconSize: [27, 39],
   iconAnchor: [13, 39],
 });
@@ -41,7 +41,9 @@ function Map({
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
-  const center = useMemo(() => {
+  const allPoints = useMemo(() => currentOffer ? [currentOffer, ...offers] : offers, [offers, currentOffer]);
+
+  const initialCenter = useMemo(() => {
     if (cityLocation) {
       return cityLocation;
     }
@@ -52,14 +54,17 @@ function Map({
   }, [cityLocation, currentOffer, offers]);
 
   useEffect(() => {
-    if (mapRef.current !== null && mapInstanceRef.current === null) {
+    if (mapRef.current && !mapInstanceRef.current) {
       const map = leaflet
         .map(mapRef.current, {
           scrollWheelZoom: false,
           zoomControl: true,
           doubleClickZoom: true,
         })
-        .setView([center.latitude, center.longitude], center.zoom);
+        .setView(
+          [initialCenter.latitude, initialCenter.longitude],
+          initialCenter.zoom || 13,
+        );
 
       leaflet
         .tileLayer(
@@ -73,41 +78,48 @@ function Map({
 
       mapInstanceRef.current = map;
     }
-  }, []);
+  }, [initialCenter]);
+
 
   useEffect(() => {
-    if (mapInstanceRef.current) {
-      mapInstanceRef.current.setView(
-        [center.latitude, center.longitude],
-        center.zoom,
-      );
-    }
-  }, [center]);
-
-  useEffect(() => {
-    if (!mapInstanceRef.current) {
+    const map = mapInstanceRef.current;
+    if (!map || allPoints.length === 0) {
       return;
     }
 
-    const map = mapInstanceRef.current;
-    const allPoints = currentOffer ? [currentOffer, ...offers] : offers;
+    map.eachLayer((layer) => {
+      if (layer instanceof leaflet.Marker) {
+        map.removeLayer(layer);
+      }
+    });
 
-    const markers = allPoints.map((point) => {
+    const markers: leaflet.Marker[] = [];
+
+    allPoints.forEach((point) => {
       let icon = defaultIcon;
+
       if (currentOffer && point.id === currentOffer.id) {
         icon = activeIcon;
       } else if (point.id === activeOfferId) {
         icon = activeIcon;
       }
-      return leaflet
+
+      const marker = leaflet
         .marker([point.location.latitude, point.location.longitude], { icon })
         .addTo(map);
+
+      markers.push(marker);
     });
 
-    return () => {
-      markers.forEach((marker) => marker.remove());
-    };
-  }, [offers, currentOffer, activeOfferId]);
+    if (markers.length > 0) {
+      const group = leaflet.featureGroup(markers);
+      map.fitBounds(group.getBounds(), {
+        padding: [50, 50],
+        maxZoom: 15,
+      });
+    }
+
+  }, [allPoints, activeOfferId, currentOffer]);
 
   return <section ref={mapRef} className={`${mapName}__map map`} />;
 }

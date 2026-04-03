@@ -1,5 +1,7 @@
 // src/components/app/app.tsx
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import MainPage from '../../pages/main/main-page';
 import LoginPage from '../../pages/login/login-page';
@@ -8,18 +10,18 @@ import OfferPage from '../../pages/offer/offer-page';
 import NotFoundScreenPage from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
-import { Offer } from '../../types/offer';
-import { OfferCard } from '../../types/offer';
-import { Review } from '../../types/review';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
-type AppProps = {
-  offers: Offer[];
-  offerCards: OfferCard[];
-  reviews: Review[];
-  nearbyOffersCount: number;
-};
 
-function App({ offers, offerCards, reviews, nearbyOffersCount }: AppProps): JSX.Element {
+function App(): JSX.Element {
+  const authorizationStatus = useSelector((state: RootState) => state.authorizationStatus);
+  const isOffersLoading = useSelector((state: RootState) => state.isOffersLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>
@@ -30,19 +32,14 @@ function App({ offers, offerCards, reviews, nearbyOffersCount }: AppProps): JSX.
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <FavoritesPage offerCards={offerCards} />
+                <FavoritesPage />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Offer}
             element={
-              <OfferPage
-                offers={offers}
-                offerCards={offerCards}
-                nearOffers={nearbyOffersCount}
-                reviews={reviews}
-              />
+              <OfferPage/>
             }
           />
           <Route path="*" element={<NotFoundScreenPage />} />
