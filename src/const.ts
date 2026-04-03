@@ -148,3 +148,9 @@ export const SORT_TYPES = [
 ] as const;
 
 
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}
+
