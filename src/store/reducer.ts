@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, loadOffers, setSorting, requireAuthorization} from './action';
+import { changeCity, loadOffers, setSorting, requireAuthorization, setError} from './action';
 import { OfferCard } from '../types/offer';
 import { CITIES, SORT_TYPES, AuthorizationStatus } from '../const';
 
@@ -10,6 +10,7 @@ export type AppState = {
   sorting: string;
   authorizationStatus: string;
   isOffersLoading: boolean;
+  error: string | null;
 };
 
 const initialState: AppState = {
@@ -18,6 +19,7 @@ const initialState: AppState = {
   sorting: SORT_TYPES[0].value,
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersLoading: false,
+  error: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -34,6 +36,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 
