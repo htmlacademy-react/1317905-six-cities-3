@@ -1,24 +1,37 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, loadOffers, setSorting, requireAuthorization, setOffersDataLoadingStatus, setError} from './action';
-import { OfferCard } from '../types/offer';
-import { CITIES, SORT_TYPES, AuthorizationStatus } from '../const';
+import {
+  changeCity,
+  loadOffers,
+  setSorting,
+  requireAuthorization,
+  setOffersDataLoadingStatus,
+  setError,
+} from './action';
 
+import { OfferCard, Offer } from '../types/offer';
+import { CITIES, SORT_TYPES, AuthorizationStatus } from '../const';
 
 export type AppState = {
   city: string;
   offers: OfferCard[];
+  singleOffer: Offer | null;
+  nearbyOffers: OfferCard[];
   sorting: string;
   authorizationStatus: AuthorizationStatus;
   isOffersLoading: boolean;
+  isOfferLoading: boolean;
   error: string | null;
 };
 
 const initialState: AppState = {
   city: CITIES[0],
   offers: [],
+  singleOffer: null,
+  nearbyOffers: [],
   sorting: SORT_TYPES[0].value,
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersLoading: false,
+  isOfferLoading: false,
   error: null,
 };
 

@@ -1,44 +1,62 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Offer, OfferCard } from '../../types/offer.ts';
-import { Review } from '../../types/review.ts';
-import OfferGallery from '../../components/offer/offer-gallery.tsx';
-import Map from '../../components/map/map.tsx';
-import OfferNearbyPlaces from '../../components/offer/offer-nearby-places.tsx';
-import OfferInfo from '../../components/offer/offer-info.tsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../../store';
+import {
+  fetchOfferAction,
+  fetchNearbyOffersAction,
+} from '../../store/api-actions';
+import { OfferCard } from '../../types/offer';
 
-type OfferPageProps = {
-  offers: Offer[];
-  offerCards: OfferCard[];
-  nearOffers: number;
-  reviews: Review[];
-};
+import OfferGallery from '../../components/offer/offer-gallery';
+import OfferInfo from '../../components/offer/offer-info';
+import Map from '../../components/map/map';
+import OfferNearbyPlaces from '../../components/offer/offer-nearby-places';
+import NotFoundScreenPage from '../not-found-screen/not-found-screen';
 
-function OfferPage({
-  offers,
-  offerCards,
-  nearOffers,
-  reviews,
-}: OfferPageProps): JSX.Element {
+
+function OfferPage(): JSX.Element {
   const { id } = useParams<{ id: string }>();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const singleOffer = useSelector((state: RootState) => state.singleOffer);
+  const nearbyOffers = useSelector((state: RootState) => state.nearbyOffers);
+
+  useEffect(() => {
+    if (id) {
+
+      dispatch(fetchOfferAction(id));
+      dispatch(fetchNearbyOffersAction(id));
+    }
+  }, [dispatch, id]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  const currentOffer = offers.find((o) => o.id === id);
-  const currentOfferCard = offerCards.find((card) => card.id === id);
-  if (!currentOffer || !currentOfferCard) {
-    return <div>Offer not found</div>;
+
+  if (!singleOffer) {
+    return <NotFoundScreenPage />;
   }
 
-  const nearbyOffers = offerCards.filter((offer) => offer.city.name === currentOffer.city.name && offer.id !== id).slice(0, nearOffers);
+  const currentOfferCard: OfferCard = {
+    id: singleOffer.id,
+    title: singleOffer.title,
+    type: singleOffer.type,
+    price: singleOffer.price,
+    city: singleOffer.city,
+    location: singleOffer.location,
+    isFavorite: singleOffer.isFavorite,
+    isPremium: singleOffer.isPremium,
+    rating: singleOffer.rating,
+    previewImage: singleOffer.images?.[0] || '',
+  };
 
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
-        <OfferGallery images={currentOffer.images} />
-        <OfferInfo offer={currentOffer} reviews={reviews} />
+        <OfferGallery images={singleOffer.images} />
+        <OfferInfo offer={singleOffer} reviews={[]} />
         <Map
           mapName="offer"
           offers={nearbyOffers}
@@ -50,5 +68,4 @@ function OfferPage({
     </main>
   );
 }
-
 export default OfferPage;

@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { OfferCard } from '../types/offer';
+import { OfferCard, Offer } from '../types/offer';
 import { loadOffers, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
@@ -34,6 +35,29 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   },
 );
 
+export const fetchOfferAction = createAsyncThunk<Offer, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOffer',
+  async (id, { extra: api }) => {
+    const { data } = await api.get<Offer>(APIRoute.Offer(id));
+    return data;
+  },
+);
+
+export const fetchNearbyOffersAction = createAsyncThunk<OfferCard[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchNearbyOffers',
+  async (id, { extra: api }) => {
+    const { data } = await api.get<OfferCard[]>(APIRoute.Nearby(id));
+    return data;
+  },
+);
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
