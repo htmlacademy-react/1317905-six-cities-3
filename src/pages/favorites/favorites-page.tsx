@@ -1,16 +1,13 @@
-import { OfferCard } from '../../types/offer.ts';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import { CardViewMode } from '../../const.ts';
 import PlaceCard from '../../components/place-card/place-card.tsx';
 
-type FavoritesPageProps = {
-  offerCards: OfferCard[];
-};
 
-function FavoritesPage(props: FavoritesPageProps): JSX.Element {
-  const { offerCards } = props;
-
-  const favoriteOffers = offerCards.filter((offer) => offer.isFavorite);
-  const isEmpty = offerCards.length === 0;
+function FavoritesPage(): JSX.Element {
+  const allOffers = useSelector((state: RootState) => state.offers);
+  const favoriteOffers = allOffers.filter((offer) => offer.isFavorite);
+  const isEmpty = favoriteOffers.length === 0;
 
   return (
     <>
