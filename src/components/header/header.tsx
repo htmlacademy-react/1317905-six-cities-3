@@ -56,7 +56,7 @@ function Header({ withNav = true }: HeaderProps): JSX.Element {
                         className="header__avatar-wrapper user__avatar-wrapper"
                         style={
                           user?.avatarUrl
-                            ? { backgroundImage: `url(${user.avatarUrl})`, backgroundSize: 'cover' }
+                            ? { backgroundImage: `url(${user.avatarUrl})`, backgroundSize: 'cover', borderRadius: '50%' }
                             : undefined
                         }
                       />

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { RootState } from '../../store';
 import PlaceCardList from '../../components/place-card/place-card-list';
 import Map from '../../components/map/map';
@@ -13,13 +13,17 @@ function CitiesContainer(): JSX.Element {
   const allOffers = useSelector((state: RootState) => state.offers);
   const sorting = useSelector((state: RootState) => state.sorting);
 
-  const filteredOffers = allOffers.filter((offer) => offer.city.name === city);
+  const filteredOffers = useMemo(() => allOffers.filter((offer) => offer.city.name === city), [allOffers, city]);
 
-  const sortedOffers = sortOffers(filteredOffers, sorting);
+  const sortedOffers = useMemo (() => sortOffers(filteredOffers, sorting), [filteredOffers, sorting]);
   const isEmpty = sortedOffers.length === 0;
 
-  const handleCardHover = (id: string) => setCardActive(id);
-  const handleCardLeave = () => setCardActive(null);
+  const handleCardHover = useCallback((id: string) => {
+    setCardActive(id);
+  }, []);
+  const handleCardLeave = useCallback(() => {
+    setCardActive(null);
+  },[]);
 
   return (
     <div className="cities">
@@ -44,7 +48,9 @@ function CitiesContainer(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {sortedOffers.length} {sortedOffers.length !== 1 ? 'places' : 'place'} to stay in {city}
+                {sortedOffers.length}{' '}
+                {sortedOffers.length !== 1 ? 'places' : 'place'} to stay in{' '}
+                {city}
               </b>
               <SortList />
               <PlaceCardList
