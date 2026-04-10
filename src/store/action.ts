@@ -9,4 +9,6 @@ export const setSorting = createAction<string>('sorting/set');
 export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const setError = createAction<string | null>('app/setError');
+export const setDataLoadingError = createAction<string | null>('app/setDataError');
 export const setUser = createAction<UserData | null>('user/set');
+

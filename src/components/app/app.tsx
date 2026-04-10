@@ -7,6 +7,7 @@ import LoginPage from '../../pages/login/login-page';
 import FavoritesPage from '../../pages/favorites/favorites-page';
 import OfferPage from '../../pages/offer/offer-page';
 import NotFoundScreenPage from '../../pages/not-found-screen/not-found-screen';
+import ErrorScreen from '../../pages/error-screen/error-screen';
 import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
@@ -14,6 +15,7 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 function App(): JSX.Element {
   const authorizationStatus = useSelector((state: RootState) => state.authorizationStatus);
+  const dataLoadingError = useSelector((state: RootState) => state.isDataLoading);
   const isOffersLoading = useSelector((state: RootState) => state.isOffersLoading);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
@@ -21,6 +23,13 @@ function App(): JSX.Element {
       <LoadingScreen />
     );
   }
+
+  if (dataLoadingError) {
+    return (
+      <ErrorScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>

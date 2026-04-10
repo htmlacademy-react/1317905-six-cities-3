@@ -1,18 +1,28 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { REVIEW_CONSTANTS } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { postCommentAction } from '../../store/api-actions';
+import { AuthorizationStatus, REVIEW_CONSTANTS } from '../../const';
 
 type RatingValue = 1 | 2 | 3 | 4 | 5;
 
-function OfferReviewForm(): JSX.Element {
+type OfferReviewFormProps = {
+  offerId: string;
+};
 
+function OfferReviewForm({ offerId }: OfferReviewFormProps): JSX.Element | null {
   const [rating, setRating] = useState<RatingValue | null>(null);
   const [review, setReview] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus,
+  );
 
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setRating(Number(evt.target.value) as RatingValue);
   };
-
 
   const handleReviewChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setReview(evt.target.value);
@@ -20,13 +30,40 @@ function OfferReviewForm(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    setRating(null);
-    setReview('');
+    if (
+      !rating ||
+      review.length < REVIEW_CONSTANTS.MIN_LENGTH ||
+      review.length > REVIEW_CONSTANTS.MAX_LENGTH
+    ) {
+      return;
+    }
+
+    void (async () => {
+      setIsSubmitting(true);
+      setError(null);
+      try {
+        await dispatch(
+          postCommentAction({ comment: review, rating, offerId }),
+        ).unwrap();
+        setRating(null);
+        setReview('');
+      } catch {
+        setError('Failed to post comment. Please try again.');
+      } finally {
+        setIsSubmitting(false);
+      }
+    })();
   };
 
-  const isFormValid = rating !== null &&
-                     review.length >= REVIEW_CONSTANTS.MIN_LENGTH &&
-                     review.length <= REVIEW_CONSTANTS.MAX_LENGTH;
+  const isFormValid =
+    rating !== null &&
+    review.length >= REVIEW_CONSTANTS.MIN_LENGTH &&
+    review.length <= REVIEW_CONSTANTS.MAX_LENGTH &&
+    !isSubmitting;
+
+  if (authorizationStatus !== AuthorizationStatus.Auth) {
+    return null;
+  }
 
   return (
     <form
@@ -151,13 +188,17 @@ function OfferReviewForm(): JSX.Element {
           <span className="reviews__star">rating</span> and describe your stay
           with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-
+        {error && (
+          <div className="reviews__error" style={{ color: 'red' }}>
+            {error}
+          </div>
+        )}
         <button
           className="reviews__submit form__submit button"
           type="submit"
           disabled={!isFormValid}
         >
-          Submit
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </div>
     </form>

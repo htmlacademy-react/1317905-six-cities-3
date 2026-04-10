@@ -63,6 +63,7 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
         />
         <OfferReviewList
           reviews={reviews}
+          offerId={offer.id}
         />
       </div>
     </div>

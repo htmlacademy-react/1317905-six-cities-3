@@ -5,9 +5,10 @@ import { Setting } from '../../const.ts';
 
 type OfferReviewListProps = {
   reviews: Review[];
+   offerId: string;
 };
 
-function OfferReviewList({ reviews }: OfferReviewListProps): JSX.Element {
+function OfferReviewList({ reviews, offerId }: OfferReviewListProps): JSX.Element {
   const displayedReviews = reviews.slice(0, Setting.MaxReviewsCount);
 
   return (
@@ -21,7 +22,7 @@ function OfferReviewList({ reviews }: OfferReviewListProps): JSX.Element {
           <OfferReview key={review.id} review={review} />
         ))}
       </ul>
-      <OfferReviewForm />
+      <OfferReviewForm offerId={offerId}/>
     </section>
   );
 }
