@@ -1,16 +1,9 @@
 import {Link} from 'react-router-dom';
-import { OfferCard } from '../../types/offer';
+import { memo } from 'react';
 import { CardViewMode, cardClassMap, imageWrapperClassMap } from '../../const';
 import { getRatingWidth, getOfferRoute, capitalizeFirstLetter } from '../../utils/utils';
+import { PlaceCardProps} from '../../types/place-card-props';
 
-type ViewModeType = typeof CardViewMode[keyof typeof CardViewMode];
-
-type PlaceCardProps = {
-  offerCard: OfferCard;
-  viewMode?: ViewModeType;
-  onMouseEnter?: (id: string) => void;
-  onMouseLeave?: () => void;
-}
 
 function PlaceCard(props: PlaceCardProps) : JSX.Element {
   const {offerCard, viewMode = CardViewMode.CitiesView, onMouseEnter, onMouseLeave} = props;
@@ -71,4 +64,4 @@ function PlaceCard(props: PlaceCardProps) : JSX.Element {
   );
 }
 
-export default PlaceCard;
+export default memo(PlaceCard);
