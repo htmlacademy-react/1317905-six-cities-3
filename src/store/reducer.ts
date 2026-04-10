@@ -7,13 +7,15 @@ import {
   setOffersDataLoadingStatus,
   setError,
   setUser,
+  setDataLoadingError,
 } from './action';
 
 import {
+  fetchOffersAction,
   fetchOfferAction,
   fetchNearbyOffersAction,
   fetchReviewsAction,
-  postCommentAction
+  postCommentAction,
 } from './api-actions';
 
 import { OfferCard, Offer } from '../types/offer';
@@ -34,6 +36,7 @@ export type AppState = {
   isReviewsLoading: boolean;
   error: string | null;
   user: UserData | null;
+  isDataLoading: string | null;
 };
 
 const initialState: AppState = {
@@ -49,6 +52,7 @@ const initialState: AppState = {
   isReviewsLoading: false,
   error: null,
   user: null,
+  isDataLoading: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -75,7 +79,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     })
-
+    .addCase(setDataLoadingError, (state, action) => {
+      state.isDataLoading = action.payload;
+    })
     .addCase(fetchOfferAction.pending, (state) => {
       state.isOfferLoading = true;
     })
@@ -110,6 +116,17 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(postCommentAction.rejected, (state) => {
       state.error = 'Failed to post comment';
+    })
+    .addCase(fetchOffersAction.pending, (state) => {
+      state.isOffersLoading = true;
+      state.isDataLoading = null;
+    })
+    .addCase(fetchOffersAction.fulfilled, (state) => {
+      state.isOffersLoading = false;
+    })
+    .addCase(fetchOffersAction.rejected, (state, action) => {
+      state.isOffersLoading = false;
+      state.isDataLoading = action.error.message || 'Failed to load offers';
     });
 });
 
