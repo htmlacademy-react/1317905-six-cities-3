@@ -155,6 +155,8 @@ export const APIRoute = {
   Reviews: (id: string) => `/comments/${id}`,
   Login: '/login',
   Logout: '/logout',
+  Favorite: '/favorite',
+  FavoriteStatus: (id: string, status: number) => `/favorite/${id}/${status}`,
 } as const;
 
 export const TIMEOUT_SHOW_ERROR = 2000;

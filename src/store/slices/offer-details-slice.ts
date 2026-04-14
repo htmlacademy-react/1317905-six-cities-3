@@ -6,6 +6,7 @@ import {
   fetchNearbyOffersAction,
   fetchReviewsAction,
   postCommentAction,
+  fetchFavoritesAction,
 } from '../api-actions';
 
 interface OfferDetailsState {
@@ -67,6 +68,19 @@ const offerDetailsSlice = createSlice({
       })
       .addCase(postCommentAction.rejected, (state) => {
         state.error = 'Failed to post comment';
+      })
+      .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
+        const favoriteIds = new Set(action.payload.map((fav) => fav.id));
+        if (state.singleOffer) {
+          state.singleOffer = {
+            ...state.singleOffer,
+            isFavorite: favoriteIds.has(state.singleOffer.id),
+          };
+        }
+        state.nearbyOffers = state.nearbyOffers.map((offer) => ({
+          ...offer,
+          isFavorite: favoriteIds.has(offer.id),
+        }));
       });
   },
 });

@@ -4,6 +4,7 @@ import OfferGoods from './offer-goods.tsx';
 import OfferHost from './offer-host.tsx';
 import OfferReviewList from './offer-review-list.tsx';
 import { getRatingWidth, capitalizeFirstLetter } from '../../utils/utils.ts';
+import FavoriteButton from '../favorite-button/favorite-button.tsx';
 
 type OfferInfoProps = {
   offer: Offer;
@@ -27,12 +28,12 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
           <h1 className="offer__name">
             {offer.title}
           </h1>
-          <button className={`offer__bookmark-button ${offer.isFavorite ? 'offer__bookmark-button--active' : ''} button`} type="button">
-            <svg className="offer__bookmark-icon" width={31} height={33}>
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">{offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
-          </button>
+          <FavoriteButton
+            offerId={offer.id}
+            isFavorite={offer.isFavorite}
+            className="offer__bookmark"
+            iconSize={{ width: 31, height: 33 }}
+          />
         </div>
         <div className="offer__rating rating">
           <div className="offer__stars rating__stars">

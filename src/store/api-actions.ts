@@ -128,3 +128,22 @@ export const logoutAction = createAsyncThunk<
   dispatch(setUser(null));
   dispatch(setAuthStatus(AuthorizationStatus.NoAuth));
 });
+
+export const fetchFavoritesAction = createAsyncThunk<
+  OfferCard[],
+  undefined,
+  { state: RootState; extra: AxiosInstance }
+>('data/fetchFavorites', async (_, { extra: api }) => {
+  const { data } = await api.get<OfferCard[]>(APIRoute.Favorite);
+  return data;
+});
+
+
+export const toggleFavoriteAction = createAsyncThunk<
+  OfferCard,
+  { offerId: string; status: boolean },
+  { state: RootState; extra: AxiosInstance }
+>('data/toggleFavorite', async ({ offerId, status }, { extra: api }) => {
+  const { data } = await api.post<OfferCard>(APIRoute.FavoriteStatus(offerId, status ? 1 : 0));
+  return data;
+});
