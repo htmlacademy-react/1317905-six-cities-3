@@ -1,4 +1,3 @@
-// favorites-page.tsx (без изменений, всё работает)
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchFavoritesAction } from '../../store/api-actions';
