@@ -36,7 +36,6 @@ const favoritesSlice = createSlice({
             state.items.push(updated);
           }
         } else {
-          // Удаляем
           state.items = state.items.filter((item) => item.id !== updated.id);
         }
       });

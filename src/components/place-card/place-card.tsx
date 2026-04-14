@@ -1,7 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { toggleFavoriteAction } from '../../store/api-actions';
-import { CardViewMode, cardClassMap, imageWrapperClassMap } from '../../const';
+import {
+  CardViewMode,
+  cardClassMap,
+  imageWrapperClassMap,
+  AuthorizationStatus,
+  AppRoute,
+} from '../../const';
 import {
   getRatingWidth,
   getOfferRoute,
@@ -19,11 +25,17 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   const { id, title, type, price, previewImage, isPremium, rating } = offerCard;
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const authStatus = useAppSelector((state) => state.user.authorizationStatus);
   const isFavorite = useAppSelector((state) =>
     state.favorites.items.some((item) => item.id === id),
   );
 
   const handleFavoriteClick = () => {
+    if (authStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+      return;
+    }
     dispatch(toggleFavoriteAction({ offerId: id, status: !isFavorite }));
   };
 
