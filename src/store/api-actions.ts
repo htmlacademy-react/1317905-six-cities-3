@@ -100,6 +100,15 @@ export const checkAuthAction = createAsyncThunk<
   return data;
 });
 
+export const fetchFavoritesAction = createAsyncThunk<
+  OfferCard[],
+  undefined,
+  { state: RootState; extra: AxiosInstance }
+>('data/fetchFavorites', async (_, { extra: api }) => {
+  const { data } = await api.get<OfferCard[]>(APIRoute.Favorite);
+  return data;
+});
+
 export const loginAction = createAsyncThunk<
   UserData,
   AuthData,
@@ -108,9 +117,10 @@ export const loginAction = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
->('user/login', async ({ login: email, password }, { extra: api }) => {
+>('user/login', async ({ login: email, password }, { dispatch, extra: api }) => {
   const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
   saveToken(data.token);
+  dispatch(fetchFavoritesAction());
   return data;
 });
 
@@ -127,15 +137,6 @@ export const logoutAction = createAsyncThunk<
   dropToken();
   dispatch(setUser(null));
   dispatch(setAuthStatus(AuthorizationStatus.NoAuth));
-});
-
-export const fetchFavoritesAction = createAsyncThunk<
-  OfferCard[],
-  undefined,
-  { state: RootState; extra: AxiosInstance }
->('data/fetchFavorites', async (_, { extra: api }) => {
-  const { data } = await api.get<OfferCard[]>(APIRoute.Favorite);
-  return data;
 });
 
 

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { OfferCard } from '../../types/offer';
-import { fetchFavoritesAction, toggleFavoriteAction } from '../api-actions';
+import { fetchFavoritesAction, toggleFavoriteAction, logoutAction } from '../api-actions';
 
 interface FavoritesState {
   items: OfferCard[];
@@ -38,7 +38,8 @@ const favoritesSlice = createSlice({
         } else {
           state.items = state.items.filter((item) => item.id !== updated.id);
         }
-      });
+      })
+      .addCase(logoutAction.fulfilled, () => initialState);
   },
 });
 
