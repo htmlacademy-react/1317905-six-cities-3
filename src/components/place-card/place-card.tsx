@@ -101,4 +101,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   );
 }
 
-export default memo(PlaceCard);
+const MemoizedPlaceCard = memo(PlaceCard);
+MemoizedPlaceCard.displayName = 'PlaceCard';
+
+export default MemoizedPlaceCard;

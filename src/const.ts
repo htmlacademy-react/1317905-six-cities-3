@@ -6,6 +6,36 @@ export const Setting = {
   MaxReviewsCount: 10,
 };
 
+export const LOGO_SIZE = {
+  WIDTH: 81,
+  HEIGHT: 41,
+} as const;
+
+export const FOOTER_LOGO_SIZE = {
+  WIDTH: 64,
+  HEIGHT: 33,
+} as const;
+
+export const SORT_ARROW_SIZE = {
+  WIDTH: 7,
+  HEIGHT: 4,
+} as const;
+
+export const REVIEW_STAR_SIZE = {
+  WIDTH: 37,
+  HEIGHT: 33,
+} as const;
+
+export const OFFER_BOOKMARK_ICON_SIZE = {
+  WIDTH: 31,
+  HEIGHT: 33,
+} as const;
+
+export const OFFER_HOST_AVATAR_SIZE = {
+  WIDTH: 74,
+  HEIGHT: 74,
+} as const;
+
 export const CITIES = [
   'Paris',
   'Cologne',
@@ -66,12 +96,6 @@ export const CITIES_LIST: City[] = [
   },
 ];
 
-export const AMSTERDAM_LOCATIONS = [
-  { latitude: 52.3909553943508, longitude: 4.85309666406198 },
-  { latitude: 52.3609553943508, longitude: 4.85309666406198 },
-  { latitude: 52.3909553943508, longitude: 4.929309666406198 },
-  { latitude: 52.3809553943508, longitude: 4.939309666406198 },
-] as const;
 
 export enum AppRoute {
   Login = '/login',

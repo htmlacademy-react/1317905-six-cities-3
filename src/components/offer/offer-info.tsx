@@ -6,6 +6,7 @@ import OfferReviewList from './offer-review-list.tsx';
 import { getRatingWidth, capitalizeFirstLetter } from '../../utils/utils.ts';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { toggleFavoriteAction } from '../../store/api-actions';
+import { OFFER_BOOKMARK_ICON_SIZE } from '../../const.ts';
 
 type OfferInfoProps = {
   offer: Offer;
@@ -38,7 +39,7 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
             type="button"
             onClick={handleFavoriteClick}
           >
-            <svg className="offer__bookmark-icon" width={31} height={33}>
+            <svg className="offer__bookmark-icon" width={OFFER_BOOKMARK_ICON_SIZE.WIDTH} height={OFFER_BOOKMARK_ICON_SIZE.HEIGHT}>
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">

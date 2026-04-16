@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { postCommentAction } from '../../store/api-actions';
-import { AuthorizationStatus, REVIEW_CONSTANTS } from '../../const';
+import { AuthorizationStatus, REVIEW_CONSTANTS, REVIEW_STAR_SIZE } from '../../const';
 
 type RatingValue = 1 | 2 | 3 | 4 | 5;
 
@@ -91,7 +91,7 @@ function OfferReviewForm({ offerId }: OfferReviewFormProps): JSX.Element | null 
           className="reviews__rating-label form__rating-label"
           title="perfect"
         >
-          <svg className="form__star-image" width={37} height={33}>
+          <svg className="form__star-image" width={REVIEW_STAR_SIZE.WIDTH} height={REVIEW_STAR_SIZE.HEIGHT}>
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -110,7 +110,7 @@ function OfferReviewForm({ offerId }: OfferReviewFormProps): JSX.Element | null 
           className="reviews__rating-label form__rating-label"
           title="good"
         >
-          <svg className="form__star-image" width={37} height={33}>
+          <svg className="form__star-image" width={REVIEW_STAR_SIZE.WIDTH} height={REVIEW_STAR_SIZE.HEIGHT}>
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -129,7 +129,7 @@ function OfferReviewForm({ offerId }: OfferReviewFormProps): JSX.Element | null 
           className="reviews__rating-label form__rating-label"
           title="not bad"
         >
-          <svg className="form__star-image" width={37} height={33}>
+          <svg className="form__star-image" width={REVIEW_STAR_SIZE.WIDTH} height={REVIEW_STAR_SIZE.HEIGHT}>
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -148,7 +148,7 @@ function OfferReviewForm({ offerId }: OfferReviewFormProps): JSX.Element | null 
           className="reviews__rating-label form__rating-label"
           title="badly"
         >
-          <svg className="form__star-image" width={37} height={33}>
+          <svg className="form__star-image" width={REVIEW_STAR_SIZE.WIDTH} height={REVIEW_STAR_SIZE.HEIGHT}>
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -167,7 +167,7 @@ function OfferReviewForm({ offerId }: OfferReviewFormProps): JSX.Element | null 
           className="reviews__rating-label form__rating-label"
           title="terribly"
         >
-          <svg className="form__star-image" width={37} height={33}>
+          <svg className="form__star-image" width={REVIEW_STAR_SIZE.WIDTH} height={REVIEW_STAR_SIZE.HEIGHT}>
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
