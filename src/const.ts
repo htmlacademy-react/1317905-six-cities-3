@@ -36,6 +36,8 @@ export const OFFER_HOST_AVATAR_SIZE = {
   HEIGHT: 74,
 } as const;
 
+export const OFFER_GALLERY_MAX_IMAGES = 6;
+
 export const CITIES = [
   'Paris',
   'Cologne',
