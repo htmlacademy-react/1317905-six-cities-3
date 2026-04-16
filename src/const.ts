@@ -3,9 +3,8 @@ import { City } from './types/city';
 export const Setting = {
   IsAuth: true,
   NearOffers: 3,
-  MaxReviewsCount: 10
+  MaxReviewsCount: 10,
 };
-
 
 export const CITIES = [
   'Paris',
@@ -13,9 +12,8 @@ export const CITIES = [
   'Brussels',
   'Amsterdam',
   'Hamburg',
-  'Dusseldorf'
+  'Dusseldorf',
 ] as const;
-
 
 export const CITIES_LIST: City[] = [
   {
@@ -66,7 +64,7 @@ export const CITIES_LIST: City[] = [
       zoom: 10,
     },
   },
-] ;
+];
 
 export const AMSTERDAM_LOCATIONS = [
   { latitude: 52.3909553943508, longitude: 4.85309666406198 },
@@ -79,7 +77,7 @@ export enum AppRoute {
   Login = '/login',
   Main = '/',
   Favorites = '/favorites',
-  Offer = '/offer/:id'
+  Offer = '/offer/:id',
 }
 
 export enum AuthorizationStatus {
@@ -92,7 +90,6 @@ export const PAGE_CLASS_MAP: Record<string, string> = {
   [AppRoute.Main]: 'page--gray page--main',
   [AppRoute.Login]: 'page--gray page--login',
 } as const;
-
 
 export const CardViewMode = {
   CitiesView: {
@@ -134,10 +131,18 @@ export enum MapName {
   Offers = 'offer',
 }
 
+export const MARKER_CONFIG = {
+  URL_DEFAULT: '/markup/img/pin.svg',
+  URL_ACTIVE: '/markup/img/pin-active.svg',
+  ICON_SIZE: { width: 27, height: 39 },
+  ICON_ANCHOR: { x: 13, y: 39 },
+} as const;
 
-export const MARKERS = {
-  URL_MARKER_DEFAULT: '/markup/img/pin.svg',
-  URL_MARKER_ACTIVE: '/markup/img/pin-active.svg',
+
+export const DEFAULT_LOCATION = {
+  latitude: 52.37454,
+  longitude: 4.897976,
+  zoom: 12,
 } as const;
 
 export const SORT_TYPES = [
@@ -146,7 +151,6 @@ export const SORT_TYPES = [
   { label: 'Price: high to low', value: 'priceHighToLow' },
   { label: 'Top rated first', value: 'topRated' },
 ] as const;
-
 
 export const APIRoute = {
   Offers: '/offers',
@@ -160,4 +164,3 @@ export const APIRoute = {
 } as const;
 
 export const TIMEOUT_SHOW_ERROR = 2000;
-

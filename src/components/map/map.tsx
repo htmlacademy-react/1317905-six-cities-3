@@ -3,24 +3,24 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { OfferCard } from '../../types/offer';
 import { Location } from '../../types/location';
-import { MARKERS } from '../../const';
+import { MARKER_CONFIG, DEFAULT_LOCATION} from '../../const';
 
 const defaultIcon = leaflet.icon({
-  iconUrl: MARKERS.URL_MARKER_DEFAULT,
-  iconSize: [27, 39],
-  iconAnchor: [13, 39],
+  iconUrl: MARKER_CONFIG.URL_DEFAULT,
+  iconSize: [MARKER_CONFIG.ICON_SIZE.width,MARKER_CONFIG.ICON_SIZE.height],
+  iconAnchor: [MARKER_CONFIG.ICON_ANCHOR.x,MARKER_CONFIG.ICON_ANCHOR.y],
 });
 
 const activeIcon = leaflet.icon({
-  iconUrl: MARKERS.URL_MARKER_ACTIVE,
-  iconSize: [27, 39],
-  iconAnchor: [13, 39],
+  iconUrl: MARKER_CONFIG.URL_ACTIVE,
+  iconSize:[MARKER_CONFIG.ICON_SIZE.width,MARKER_CONFIG.ICON_SIZE.height],
+  iconAnchor: [MARKER_CONFIG.ICON_ANCHOR.x,MARKER_CONFIG.ICON_ANCHOR.y],
 });
 
 const defaultLocation: Location = {
-  latitude: 52.37454,
-  longitude: 4.897976,
-  zoom: 12,
+  latitude: DEFAULT_LOCATION.latitude,
+  longitude: DEFAULT_LOCATION.longitude,
+  zoom: DEFAULT_LOCATION.zoom,
 };
 
 type MapProps = {
