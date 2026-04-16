@@ -131,6 +131,20 @@ export enum MapName {
   Offers = 'offer',
 }
 
+export const MAP_SETTINGS = {
+  DEFAULT_ZOOM: 13,
+  MAX_ZOOM_FIT_BOUNDS: 15,
+  PADDING_FIT_BOUNDS: [50, 50] as [number, number],
+  SCROLL_WHEEL_ZOOM: false,
+  ZOOM_CONTROL: true,
+  DOUBLE_CLICK_ZOOM: true,
+} as const;
+
+export const TILE_LAYER = {
+  URL: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  ATTRIBUTION: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+} as const;
+
 export const MARKER_CONFIG = {
   URL_DEFAULT: '/markup/img/pin.svg',
   URL_ACTIVE: '/markup/img/pin-active.svg',

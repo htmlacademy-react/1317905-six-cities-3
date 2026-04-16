@@ -3,7 +3,7 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { OfferCard } from '../../types/offer';
 import { Location } from '../../types/location';
-import { MARKER_CONFIG, DEFAULT_LOCATION} from '../../const';
+import { MAP_SETTINGS, TILE_LAYER, MARKER_CONFIG, DEFAULT_LOCATION} from '../../const';
 
 const defaultIcon = leaflet.icon({
   iconUrl: MARKER_CONFIG.URL_DEFAULT,
@@ -57,21 +57,21 @@ function Map({
     if (mapRef.current && !mapInstanceRef.current) {
       const map = leaflet
         .map(mapRef.current, {
-          scrollWheelZoom: false,
-          zoomControl: true,
-          doubleClickZoom: true,
+          scrollWheelZoom: MAP_SETTINGS.SCROLL_WHEEL_ZOOM,
+          zoomControl: MAP_SETTINGS.ZOOM_CONTROL,
+          doubleClickZoom: MAP_SETTINGS.DOUBLE_CLICK_ZOOM,
         })
         .setView(
           [initialCenter.latitude, initialCenter.longitude],
-          initialCenter.zoom || 13,
+          initialCenter.zoom || MAP_SETTINGS.DEFAULT_ZOOM,
         );
 
       leaflet
         .tileLayer(
-          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+          TILE_LAYER.URL,
           {
             attribution:
-              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              TILE_LAYER.ATTRIBUTION,
           },
         )
         .addTo(map);
@@ -114,8 +114,8 @@ function Map({
     if (markers.length > 0) {
       const group = leaflet.featureGroup(markers);
       map.fitBounds(group.getBounds(), {
-        padding: [50, 50],
-        maxZoom: 15,
+        padding: MAP_SETTINGS.PADDING_FIT_BOUNDS,
+        maxZoom: MAP_SETTINGS.MAX_ZOOM_FIT_BOUNDS,
       });
     }
 
