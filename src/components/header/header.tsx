@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../store/hooks'; // создайте хуки, если ещё нет
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logoutAction } from '../../store/api-actions';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
@@ -11,9 +11,7 @@ type HeaderProps = {
 function Header({ withNav = true }: HeaderProps): JSX.Element {
   const dispatch = useAppDispatch();
   const { authorizationStatus, user } = useAppSelector((state) => state.user);
-  const favoritesCount = useAppSelector((state) =>
-    state.offers.items.filter((offer) => offer.isFavorite).length
-  );
+  const favoritesCount = useAppSelector((state) => state.favorites.items.length);
 
   const handleLogout = () => {
     dispatch(logoutAction());

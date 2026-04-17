@@ -1,11 +1,39 @@
-import { City } from './types/city';
-
 export const Setting = {
-  IsAuth: true,
   NearOffers: 3,
-  MaxReviewsCount: 10
+  MaxReviewsCount: 10,
 };
 
+export const LOGO_SIZE = {
+  WIDTH: 81,
+  HEIGHT: 41,
+} as const;
+
+export const FOOTER_LOGO_SIZE = {
+  WIDTH: 64,
+  HEIGHT: 33,
+} as const;
+
+export const SORT_ARROW_SIZE = {
+  WIDTH: 7,
+  HEIGHT: 4,
+} as const;
+
+export const REVIEW_STAR_SIZE = {
+  WIDTH: 37,
+  HEIGHT: 33,
+} as const;
+
+export const OFFER_BOOKMARK_ICON_SIZE = {
+  WIDTH: 31,
+  HEIGHT: 33,
+} as const;
+
+export const OFFER_HOST_AVATAR_SIZE = {
+  WIDTH: 74,
+  HEIGHT: 74,
+} as const;
+
+export const OFFER_GALLERY_MAX_IMAGES = 6;
 
 export const CITIES = [
   'Paris',
@@ -13,73 +41,14 @@ export const CITIES = [
   'Brussels',
   'Amsterdam',
   'Hamburg',
-  'Dusseldorf'
-] as const;
-
-
-export const CITIES_LIST: City[] = [
-  {
-    name: 'Paris',
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 10,
-    },
-  },
-  {
-    name: 'Cologne',
-    location: {
-      latitude: 50.938361,
-      longitude: 6.959974,
-      zoom: 10,
-    },
-  },
-  {
-    name: 'Brussels',
-    location: {
-      latitude: 50.846557,
-      longitude: 4.351697,
-      zoom: 10,
-    },
-  },
-  {
-    name: 'Amsterdam',
-    location: {
-      latitude: 52.37454,
-      longitude: 4.897976,
-      zoom: 10,
-    },
-  },
-  {
-    name: 'Hamburg',
-    location: {
-      latitude: 53.550341,
-      longitude: 10.000654,
-      zoom: 10,
-    },
-  },
-  {
-    name: 'Dusseldorf',
-    location: {
-      latitude: 51.225402,
-      longitude: 6.776314,
-      zoom: 10,
-    },
-  },
-] ;
-
-export const AMSTERDAM_LOCATIONS = [
-  { latitude: 52.3909553943508, longitude: 4.85309666406198 },
-  { latitude: 52.3609553943508, longitude: 4.85309666406198 },
-  { latitude: 52.3909553943508, longitude: 4.929309666406198 },
-  { latitude: 52.3809553943508, longitude: 4.939309666406198 },
+  'Dusseldorf',
 ] as const;
 
 export enum AppRoute {
   Login = '/login',
   Main = '/',
   Favorites = '/favorites',
-  Offer = '/offer/:id'
+  Offer = '/offer/:id',
 }
 
 export enum AuthorizationStatus {
@@ -92,7 +61,6 @@ export const PAGE_CLASS_MAP: Record<string, string> = {
   [AppRoute.Main]: 'page--gray page--main',
   [AppRoute.Login]: 'page--gray page--login',
 } as const;
-
 
 export const CardViewMode = {
   CitiesView: {
@@ -134,10 +102,32 @@ export enum MapName {
   Offers = 'offer',
 }
 
+export const MAP_SETTINGS = {
+  DEFAULT_ZOOM: 13,
+  MAX_ZOOM_FIT_BOUNDS: 15,
+  PADDING_FIT_BOUNDS: [50, 50] as [number, number],
+  SCROLL_WHEEL_ZOOM: false,
+  ZOOM_CONTROL: true,
+  DOUBLE_CLICK_ZOOM: true,
+} as const;
 
-export const MARKERS = {
-  URL_MARKER_DEFAULT: '/markup/img/pin.svg',
-  URL_MARKER_ACTIVE: '/markup/img/pin-active.svg',
+export const TILE_LAYER = {
+  URL: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  ATTRIBUTION: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+} as const;
+
+export const MARKER_CONFIG = {
+  URL_DEFAULT: '/markup/img/pin.svg',
+  URL_ACTIVE: '/markup/img/pin-active.svg',
+  ICON_SIZE: { width: 27, height: 39 },
+  ICON_ANCHOR: { x: 13, y: 39 },
+} as const;
+
+
+export const DEFAULT_LOCATION = {
+  latitude: 52.37454,
+  longitude: 4.897976,
+  zoom: 12,
 } as const;
 
 export const SORT_TYPES = [
@@ -147,7 +137,6 @@ export const SORT_TYPES = [
   { label: 'Top rated first', value: 'topRated' },
 ] as const;
 
-
 export const APIRoute = {
   Offers: '/offers',
   Offer: (id: string) => `/offers/${id}`,
@@ -155,7 +144,8 @@ export const APIRoute = {
   Reviews: (id: string) => `/comments/${id}`,
   Login: '/login',
   Logout: '/logout',
+  Favorite: '/favorite',
+  FavoriteStatus: (id: string, status: number) => `/favorite/${id}/${status}`,
 } as const;
 
 export const TIMEOUT_SHOW_ERROR = 2000;
-

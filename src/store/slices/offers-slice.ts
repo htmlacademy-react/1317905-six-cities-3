@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { OfferCard } from '../../types/offer';
-import { fetchOffersAction } from '../api-actions';
+import {
+  fetchOffersAction,
+  fetchFavoritesAction,
+} from '../api-actions';
 
 interface OffersState {
   items: OfferCard[];
@@ -22,7 +25,9 @@ const offersSlice = createSlice({
       state.items = action.payload;
     },
     updateOfferFavorite: (state, action: PayloadAction<OfferCard>) => {
-      const index = state.items.findIndex((offer) => offer.id === action.payload.id);
+      const index = state.items.findIndex(
+        (offer) => offer.id === action.payload.id,
+      );
       if (index !== -1) {
         state.items[index] = action.payload;
       }
@@ -41,8 +46,14 @@ const offersSlice = createSlice({
       .addCase(fetchOffersAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to load offers';
+      })
+      .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
+        const favoriteIds = new Set(action.payload.map((fav) => fav.id));
+        state.items = state.items.map((offer) => ({
+          ...offer,
+          isFavorite: favoriteIds.has(offer.id),
+        }));
       });
-
   },
 });
 

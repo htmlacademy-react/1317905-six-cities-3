@@ -1,8 +1,8 @@
-import { useState, memo } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { setSorting } from '../../store/slices/ui-slice';
-import { SORT_TYPES } from '../../const';
+import { SORT_ARROW_SIZE, SORT_TYPES } from '../../const';
 
 function SortList(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +25,7 @@ function SortList(): JSX.Element {
         onClick={() => setIsOpen(!isOpen)}
       >
         {currentLabel}
-        <svg className="places__sorting-arrow" width={7} height={4}>
+        <svg className="places__sorting-arrow" width={SORT_ARROW_SIZE.WIDTH} height={SORT_ARROW_SIZE.HEIGHT}>
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
@@ -47,4 +47,4 @@ function SortList(): JSX.Element {
   );
 }
 
-export default memo(SortList);
+export default SortList;

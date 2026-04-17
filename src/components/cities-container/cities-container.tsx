@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useState, useMemo, useCallback } from 'react';
 import { RootState } from '../../store';
 import PlaceCardList from '../../components/place-card/place-card-list';
+import CitiesEmpty from '../cities-empty/cities-empty';
 import Map from '../../components/map/map';
 import SortList from '../sort-list/sort-list';
 import { sortOffers } from './sort-offers';
@@ -15,7 +16,7 @@ function CitiesContainer(): JSX.Element {
 
   const filteredOffers = useMemo(() => allOffers.filter((offer) => offer.city.name === city), [allOffers, city]);
 
-  const sortedOffers = useMemo (() => sortOffers(filteredOffers, sorting), [filteredOffers, sorting]);
+  const sortedOffers = useMemo(() => sortOffers(filteredOffers, sorting), [filteredOffers, sorting]);
   const isEmpty = sortedOffers.length === 0;
 
   const handleCardHover = useCallback((id: string) => {
@@ -31,18 +32,7 @@ function CitiesContainer(): JSX.Element {
         className={`cities__places-container container ${isEmpty ? 'cities__places-container--empty' : ''}`}
       >
         {isEmpty ? (
-          <>
-            <section className="cities__no-places">
-              <div className="cities__status-wrapper tabs__content">
-                <b className="cities__status">No places to stay available</b>
-                <p className="cities__status-description">
-                  We could not find any property available at the moment in{' '}
-                  {city}
-                </p>
-              </div>
-            </section>
-            <div className="cities__right-section"></div>
-          </>
+          <CitiesEmpty city={city} />
         ) : (
           <>
             <section className="cities__places places">

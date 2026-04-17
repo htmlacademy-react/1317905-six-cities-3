@@ -2,10 +2,21 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import './error-message.css';
 
-function ErrorMessage(): JSX.Element | null {
-  const error = useSelector((state: RootState) => state.ui.error);
 
-  return error ? <div className="error-message">{error}</div> : null;
+type ErrorMessageProps = {
+  message?: string | null;
+  isGlobal?: boolean;
+};
+
+function ErrorMessage({ message, isGlobal = false }: ErrorMessageProps): JSX.Element | null {
+  const globalError = useSelector((state: RootState) => state.ui.error);
+  const errorText = message ?? globalError;
+
+  if (!errorText) {
+    return null;
+  }
+
+  return errorText ? <div className={`error-message ${isGlobal ? 'error-message--global' : 'error-message--local'}`}>{errorText}</div> : null;
 }
 
 export default ErrorMessage;

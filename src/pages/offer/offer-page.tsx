@@ -23,11 +23,21 @@ function OfferPage(): JSX.Element {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
 
-  const singleOffer = useSelector((state: RootState) => state.offerDetails.singleOffer);
-  const nearbyOffers = useSelector((state: RootState) => state.offerDetails.nearbyOffers);
+  const singleOffer = useSelector(
+    (state: RootState) => state.offerDetails.singleOffer,
+  );
+  const nearbyOffers = useSelector(
+    (state: RootState) => state.offerDetails.nearbyOffers,
+  );
   const reviews = useSelector((state: RootState) => state.offerDetails.reviews);
   const isOfferLoading = useSelector(
     (state: RootState) => state.offerDetails.isOfferLoading,
+  );
+  const nearbyError = useSelector(
+    (state: RootState) => state.offerDetails.errorNearby,
+  );
+  const reviewsError = useSelector(
+    (state: RootState) => state.offerDetails.errorReviews,
   );
 
   const lastFetchedId = useRef<string | null>(null);
@@ -73,10 +83,7 @@ function OfferPage(): JSX.Element {
     <main className="page__main page__main--offer">
       <section className="offer">
         <OfferGallery images={singleOffer.images} />
-        <OfferInfo
-          offer={singleOffer}
-          reviews={reviews}
-        />
+        <OfferInfo offer={singleOffer} reviews={reviews} error={reviewsError} />
         <Map
           mapName="offer"
           offers={nearbyOffers}
@@ -84,7 +91,10 @@ function OfferPage(): JSX.Element {
         />
       </section>
 
-      <OfferNearbyPlaces offers={nearbyOffers.slice(0, Setting.NearOffers)} />
+      <OfferNearbyPlaces
+        offers={nearbyOffers.slice(0, Setting.NearOffers)}
+        error={nearbyError}
+      />
     </main>
   );
 }
