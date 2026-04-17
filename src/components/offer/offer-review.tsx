@@ -1,6 +1,7 @@
 import { Review } from '../../types/review.ts';
 import { getRatingWidth } from '../../utils/utils.ts';
 import dayjs from 'dayjs';
+import { OFFER_USER_AVATAR_SIZE } from '../../const.ts';
 
 
 type OfferReviewProps = {
@@ -15,8 +16,8 @@ function OfferReview({ review }: OfferReviewProps): JSX.Element {
           <img
             className="reviews__avatar user__avatar"
             src={review?.user.avatarUrl}
-            width={54}
-            height={54}
+            width={OFFER_USER_AVATAR_SIZE.WIDTH}
+            height={OFFER_USER_AVATAR_SIZE.HEIGHT}
             alt="Reviews avatar"
           />
         </div>
