@@ -6,6 +6,6 @@ describe('Component: CitiesEmpty', () => {
     const city = 'Amsterdam';
     render(<CitiesEmpty city={city} />);
     expect(screen.getByText(/No places to stay available/i)).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(`in ${city}`, 'i'))).toBeInTheDocument();
+    expect(screen.getByText(`in ${city}`, { exact: false })).toBeInTheDocument();
   });
 });
