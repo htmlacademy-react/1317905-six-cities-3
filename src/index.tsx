@@ -18,7 +18,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App/>
-      <ErrorMessage />
+      <ErrorMessage isGlobal/>
     </Provider>
   </React.StrictMode>,
 );

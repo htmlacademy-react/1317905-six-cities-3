@@ -16,6 +16,8 @@ interface OfferDetailsState {
   isOfferLoading: boolean;
   isReviewsLoading: boolean;
   error: string | null;
+  errorNearby: string | null;
+  errorReviews: string | null;
 }
 
 const initialState: OfferDetailsState = {
@@ -25,6 +27,8 @@ const initialState: OfferDetailsState = {
   isOfferLoading: false,
   isReviewsLoading: false,
   error: null,
+  errorNearby: null,
+  errorReviews: null,
 };
 
 const offerDetailsSlice = createSlice({
@@ -49,19 +53,22 @@ const offerDetailsSlice = createSlice({
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
       })
-      .addCase(fetchNearbyOffersAction.rejected, (state) => {
+      .addCase(fetchNearbyOffersAction.rejected, (state, action) => {
         state.nearbyOffers = [];
+        state.errorNearby = action.error.message || 'Failed to load nearby offers';
       })
       .addCase(fetchReviewsAction.pending, (state) => {
         state.isReviewsLoading = true;
+        state.errorReviews = null;
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
         state.isReviewsLoading = false;
       })
-      .addCase(fetchReviewsAction.rejected, (state) => {
+      .addCase(fetchReviewsAction.rejected, (state, action) => {
         state.reviews = [];
         state.isReviewsLoading = false;
+        state.errorReviews = action.error.message || 'Failed to load reviews';
       })
       .addCase(postCommentAction.fulfilled, (state, action) => {
         state.reviews.unshift(action.payload);

@@ -1,12 +1,20 @@
 import PlaceCard from '../place-card/place-card';
 import { CardViewMode } from '../../const';
 import { OfferCard } from '../../types/offer';
+import ErrorMessage from '../error-message/error-message';
 
 type OfferNearbyPlacesProps = {
   offers: OfferCard[];
+  error?: string | null;
 };
 
-function OfferNearbyPlaces({ offers }: OfferNearbyPlacesProps): JSX.Element | null{
+function OfferNearbyPlaces({
+  offers,
+  error,
+}: OfferNearbyPlacesProps): JSX.Element | null {
+  if (error) {
+    return <ErrorMessage message="Failed to load nearby places" />;
+  }
   if (offers.length === 0) {
     return null;
   }

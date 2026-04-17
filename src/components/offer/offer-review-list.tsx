@@ -2,14 +2,19 @@ import OfferReview from './offer-review.tsx';
 import OfferReviewForm from './offer-review-form.tsx';
 import { Review } from '../../types/review.ts';
 import { Setting } from '../../const.ts';
+import ErrorMessage from '../error-message/error-message.tsx';
 
 type OfferReviewListProps = {
   reviews: Review[];
-   offerId: string;
+  offerId: string;
+  error?: string | null;
 };
 
-function OfferReviewList({ reviews, offerId }: OfferReviewListProps): JSX.Element {
+function OfferReviewList({ reviews, offerId, error }: OfferReviewListProps): JSX.Element {
   const displayedReviews = reviews.slice(0, Setting.MaxReviewsCount);
+  if (error) {
+    return <ErrorMessage message="Failed to load reviews" />;
+  }
 
   return (
     <section className="offer__reviews reviews">

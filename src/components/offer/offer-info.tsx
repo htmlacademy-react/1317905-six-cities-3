@@ -11,10 +11,11 @@ import { OFFER_BOOKMARK_ICON_SIZE } from '../../const.ts';
 type OfferInfoProps = {
   offer: Offer;
   reviews: Review[];
+  error?: string | null;
 };
 
 function OfferInfo(props: OfferInfoProps): JSX.Element {
-  const { offer, reviews } = props;
+  const { offer, reviews, error } = props;
   const dispatch = useAppDispatch();
   const isFavorite = useAppSelector((state) =>
     state.favorites.items.some((item) => item.id === offer.id)
@@ -71,7 +72,7 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
         </div>
         <OfferGoods goods={offer.goods} />
         <OfferHost host={offer.host} description={offer.description} />
-        <OfferReviewList reviews={reviews} offerId={offer.id} />
+        <OfferReviewList reviews={reviews} offerId={offer.id} error={error}/>
       </div>
     </div>
   );

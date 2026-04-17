@@ -1,9 +1,21 @@
 .error-message {
-  position: fixed;
-  top: 30px;
-  right: 30px;
-  padding: 10px;
+  padding: 10px 20px;
   background-color: #d96666;
   color: white;
   border-radius: 5px;
+  z-index: 1000;
+}
+
+.error-message--global {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  max-width: 300px;
+}
+
+.error-message--local {
+  margin: 20px auto;
+  text-align: center;
+  width: fit-content;
+  max-width: 80%;
 }
