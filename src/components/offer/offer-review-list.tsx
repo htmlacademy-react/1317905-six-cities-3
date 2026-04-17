@@ -10,8 +10,15 @@ type OfferReviewListProps = {
   error?: string | null;
 };
 
-function OfferReviewList({ reviews, offerId, error }: OfferReviewListProps): JSX.Element {
-  const displayedReviews = reviews.slice(0, Setting.MaxReviewsCount);
+function OfferReviewList({
+  reviews,
+  offerId,
+  error,
+}: OfferReviewListProps): JSX.Element {
+  const sortedReviews = [...reviews].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+  const displayedReviews = sortedReviews.slice(0, Setting.MaxReviewsCount);
   if (error) {
     return <ErrorMessage message="Failed to load reviews" />;
   }
@@ -27,7 +34,7 @@ function OfferReviewList({ reviews, offerId, error }: OfferReviewListProps): JSX
           <OfferReview key={review.id} review={review} />
         ))}
       </ul>
-      <OfferReviewForm offerId={offerId}/>
+      <OfferReviewForm offerId={offerId} />
     </section>
   );
 }
