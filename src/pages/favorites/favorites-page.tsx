@@ -28,7 +28,7 @@ function FavoritesPage(): JSX.Element {
   }, {} as Record<string, typeof favorites>);
 
   return (
-    <main className="page__main page__main--favorites">
+    <main className={`page__main page__main--favorites ${isEmpty ? 'page__main--favorites-empty' : ''}`}>
       <div className="page__favorites-container container">
         <section className={`favorites ${isEmpty ? 'favorites--empty' : ''}`}>
           {isEmpty ? (
