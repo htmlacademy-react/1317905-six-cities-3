@@ -172,6 +172,7 @@ describe('Async actions', () => {
 
       expect(actions).toEqual([
         checkAuthAction.pending.type,
+        fetchFavoritesAction.pending.type,
         checkAuthAction.fulfilled.type,
       ]);
     });
