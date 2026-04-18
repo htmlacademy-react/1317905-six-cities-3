@@ -1,4 +1,3 @@
-
 import PlaceCard from './place-card';
 import { CardViewMode } from '../../const';
 import { OfferCard } from '../../types/offer';

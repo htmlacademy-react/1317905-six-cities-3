@@ -1,8 +1,9 @@
-import { useRef, FormEvent, useState, useEffect } from 'react';
+import { useRef, FormEvent, useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginAction } from '../../store/api-actions';
-import { AuthorizationStatus, AppRoute } from '../../const';
+import { AuthorizationStatus, AppRoute, CITIES } from '../../const';
+import { changeCity } from '../../store/slices/ui-slice';
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -11,6 +12,16 @@ function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector((state) => state.user.authorizationStatus);
+
+  const randomCity = useMemo (() => {
+    const randomIndex = Math.floor(Math.random() * CITIES.length);
+    return CITIES[randomIndex];
+  }, []);
+
+  const handleCityClick = () => {
+    dispatch(changeCity(randomCity));
+    navigate(AppRoute.Main);
+  };
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -83,8 +94,8 @@ function LoginPage(): JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a className="locations__item-link" href="#">
-              <span>Amsterdam</span>
+            <a className="locations__item-link" onClick={handleCityClick} style={{cursor: 'pointer'}}>
+              <span>{randomCity}</span>
             </a>
           </div>
         </section>

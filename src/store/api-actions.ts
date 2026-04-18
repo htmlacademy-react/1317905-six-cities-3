@@ -87,6 +87,15 @@ export const postCommentAction = createAsyncThunk<
   return data;
 });
 
+export const fetchFavoritesAction = createAsyncThunk<
+  OfferCard[],
+  undefined,
+  { state: RootState; extra: AxiosInstance }
+>('data/fetchFavorites', async (_, { extra: api }) => {
+  const { data } = await api.get<OfferCard[]>(APIRoute.Favorite);
+  return data;
+});
+
 export const checkAuthAction = createAsyncThunk<
   UserData,
   undefined,
@@ -95,17 +104,9 @@ export const checkAuthAction = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
->('user/checkAuth', async (_arg, { extra: api }) => {
+>('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
   const { data } = await api.get<UserData>(APIRoute.Login);
-  return data;
-});
-
-export const fetchFavoritesAction = createAsyncThunk<
-  OfferCard[],
-  undefined,
-  { state: RootState; extra: AxiosInstance }
->('data/fetchFavorites', async (_, { extra: api }) => {
-  const { data } = await api.get<OfferCard[]>(APIRoute.Favorite);
+  dispatch(fetchFavoritesAction());
   return data;
 });
 

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Offer } from '../../types/offer.ts';
 import { Review } from '../../types/review.ts';
 import OfferGoods from './offer-goods.tsx';
@@ -6,7 +7,7 @@ import OfferReviewList from './offer-review-list.tsx';
 import { getRatingWidth, capitalizeFirstLetter } from '../../utils/utils.ts';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { toggleFavoriteAction } from '../../store/api-actions';
-import { OFFER_BOOKMARK_ICON_SIZE } from '../../const.ts';
+import { AppRoute, AuthorizationStatus, OFFER_BOOKMARK_ICON_SIZE } from '../../const.ts';
 
 type OfferInfoProps = {
   offer: Offer;
@@ -18,10 +19,19 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
   const { offer, reviews, error } = props;
   const dispatch = useAppDispatch();
   const isFavorite = useAppSelector((state) =>
-    state.favorites.items.some((item) => item.id === offer.id)
+    state.favorites.items.some((item) => item.id === offer.id),
+  );
+
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(
+    (state) => state.user.authorizationStatus,
   );
 
   const handleFavoriteClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+      return;
+    }
     dispatch(toggleFavoriteAction({ offerId: offer.id, status: !isFavorite }));
   };
 
@@ -40,7 +50,11 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
             type="button"
             onClick={handleFavoriteClick}
           >
-            <svg className="offer__bookmark-icon" width={OFFER_BOOKMARK_ICON_SIZE.WIDTH} height={OFFER_BOOKMARK_ICON_SIZE.HEIGHT}>
+            <svg
+              className="offer__bookmark-icon"
+              width={OFFER_BOOKMARK_ICON_SIZE.WIDTH}
+              height={OFFER_BOOKMARK_ICON_SIZE.HEIGHT}
+            >
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">
@@ -53,7 +67,9 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
             <span style={{ width: getRatingWidth(offer.rating) }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
-          <span className="offer__rating-value rating__value">{offer.rating}</span>
+          <span className="offer__rating-value rating__value">
+            {offer.rating}
+          </span>
         </div>
         <ul className="offer__features">
           <li className="offer__feature offer__feature--entire">
@@ -72,7 +88,7 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
         </div>
         <OfferGoods goods={offer.goods} />
         <OfferHost host={offer.host} description={offer.description} />
-        <OfferReviewList reviews={reviews} offerId={offer.id} error={error}/>
+        <OfferReviewList reviews={reviews} offerId={offer.id} error={error} />
       </div>
     </div>
   );

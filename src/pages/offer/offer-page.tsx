@@ -86,7 +86,7 @@ function OfferPage(): JSX.Element {
         <OfferInfo offer={singleOffer} reviews={reviews} error={reviewsError} />
         <Map
           mapName="offer"
-          offers={nearbyOffers}
+          offers={nearbyOffers.slice(0, Setting.NearOffers)}
           currentOffer={currentOfferCard}
         />
       </section>

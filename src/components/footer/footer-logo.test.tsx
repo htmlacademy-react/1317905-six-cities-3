@@ -4,7 +4,7 @@ import FooterLogo from './footer-logo';
 import { FOOTER_LOGO_SIZE } from '../../const';
 
 describe('Component: FooterLogo', () => {
-  it('should render link to favorite page with correct logo image', () => {
+  it('should render link to main page with correct logo image', () => {
     const preparedComponent = withHistory(<FooterLogo />);
     render(preparedComponent);
 

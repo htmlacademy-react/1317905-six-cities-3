@@ -65,6 +65,7 @@ export enum AuthorizationStatus {
 export const PAGE_CLASS_MAP: Record<string, string> = {
   [AppRoute.Main]: 'page--gray page--main',
   [AppRoute.Login]: 'page--gray page--login',
+  [AppRoute.Favorites]: 'page--favorites-empty',
 } as const;
 
 export const CardViewMode = {
